@@ -1,11 +1,11 @@
-import AnimatedC from "@/components/AnimatedC";
+import AnimatedC from "@/DesignComponents/AnimatedC";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
     return <div className="relative min-h-screen w-screen flex">
         <div className="absolute left-8 top-8">
             <img src="/logo.svg" className="text-black h-8 w-8" alt="" />
         </div>
-        <div className="bg-amber-300 w-[50%] h-screen lg:block md:block hidden">
+        <div className="bg-amber-300 w-[50%] h-screen lg:block md:block hidden rounded-tr-2xl rounded-br-2xl">
             <div className="h-full w-full flex justify-center items-center">
                 <AnimatedC />
             </div>

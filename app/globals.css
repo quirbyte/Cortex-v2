@@ -8,3 +8,7 @@
 :root {
   font-family: var(--font-lustria);
 }
+
+test{
+  background-color: #ecef58;
+}
