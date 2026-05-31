@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lustria,Manrope } from "next/font/google";
+import { Lustria, Manrope } from "next/font/google";
 import "./globals.css";
 
 const lustria = Lustria({
@@ -10,7 +10,8 @@ const lustria = Lustria({
 
 const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400","500","600","700","800"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-manrope",
 });
 
