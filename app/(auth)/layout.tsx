@@ -1,6 +1,18 @@
 import AnimatedC from "@/DesignComponents/AnimatedC";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../lib/auth";
+import { redirect } from "next/navigation";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+    /* if user is logged in, redirects them to dashboard
+       we dont use useSession since it will cause flicker as it is a client side function that fetches info in background
+        after page is loaded, getServerSession is server side so it is sent to the browser pre rendered and doesnt flicker
+    */
+    const isLoggedIn = await getServerSession(authOptions);
+    if (isLoggedIn) {
+        redirect("/dashboard");
+    }
+
     return <div className="relative min-h-screen w-screen flex">
         <div className="absolute left-8 top-8">
             <img src="/logo.svg" className="text-black h-8 w-8" alt="" />

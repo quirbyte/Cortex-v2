@@ -64,7 +64,7 @@ export default function SignupPage() {
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" className="border-2 border-zinc-200 px-3 py-2 rounded-xl w-full focus:outline-none focus:border-blue-500" />
                 {passwordError && <p className="mt-px text-[10px] text-red-500 ml-1 text-left font-medium">Invalid password</p>}
             </div>
-             <motion.button disabled={loading} onClick={handleSignup} whileHover={{ scale: 0.95 }} className="mt-5 lg:w-[60%] md:w-[60%] w-[80%] rounded-3xl py-2 text-center text-white bg-blue-500 font-manrope font-semibold disabled:opacity-85 disabled:scale-95">Continue</motion.button>
+            <motion.button disabled={loading} onClick={handleSignup} whileHover={{ scale: 0.95 }} className="mt-5 lg:w-[60%] md:w-[60%] w-[80%] rounded-3xl py-2 text-center text-white bg-blue-500 font-manrope font-semibold disabled:opacity-85 disabled:scale-95">Continue</motion.button>
         </form>
         <br />
         <p className="font-manrope text-xs text-zinc-500">or</p>
@@ -73,7 +73,7 @@ export default function SignupPage() {
             <motion.div onClick={() => handleSocial("google")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
                 <img className="h-5 w-5" src="/google.svg" alt="" />
             </motion.div>
-            <motion.div onClick={()=>handleSocial("linkedin")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
+            <motion.div onClick={() => handleSocial("linkedin")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
                 <img className="h-5 w-5" src="/linkedin.svg" alt="" />
             </motion.div>
         </div>

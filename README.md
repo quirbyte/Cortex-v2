@@ -1,10 +1,9 @@
 
 ----------------------:JOURNEY:----------------------
 
-1. Create middleware and dashboard
-
-2.  Design (professional - similar to Bizzabo)
-
+1. Design dashboard
+    i) Build Create Org system with multi tenancy
+2. Design (professional - similar to Bizzabo)
 
 ------------------------:BUGS:-----------------------
 

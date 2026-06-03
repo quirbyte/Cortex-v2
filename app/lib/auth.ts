@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt" },                                     //needs to have NEXTAUTH_SECRET in .env
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,
@@ -74,14 +74,14 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }) {                 //runs everytime jwt is created or updated
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        token.id = user.id;                      //attach
+        token.email = user.email;                //attach
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }) {          // runs everytime when client calls useSession() in frontend
       if (session.user) {
         (session.user as any).id = token.id;
         session.user.email = token.email as string;
