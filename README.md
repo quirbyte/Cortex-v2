@@ -1,9 +1,7 @@
 
 ----------------------:JOURNEY:----------------------
 
-1. 04/06/2026
-    i) create sidebar (very good ui + framer motion if needed)
-    i) schema design
+1. 
 2. Design (professional - similar to Bizzabo)
 
 ------------------------:BUGS:-----------------------
