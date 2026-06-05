@@ -1,8 +1,8 @@
 
 ----------------------:JOURNEY:----------------------
-
-1. 
-2. Design (professional - similar to Bizzabo)
+05-06-2026
+1. Dashboard UI full(Users can create orgs)
+2. User settings
 
 ------------------------:BUGS:-----------------------
 

@@ -1,29 +1,99 @@
 "use client";
-import { CircleChevronLeft, CircleChevronRight, X, Menu } from "lucide-react";
+import { CircleChevronLeft, CircleChevronRight, X, Menu, LayoutDashboard, Layout, Theater, Building2, Tickets, Settings, Headset } from "lucide-react";
 import { useState } from "react";
 
-export default function SidebarLayout({children}:{children : React.ReactElement}) {
+type optionTypes = "home" | "events" | "orgs" | "bookings" | "settings" | "help";
+
+export default function SidebarLayout({ children }: { children: React.ReactElement }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [option, setOption] = useState<optionTypes>("home");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return <div className="flex h-screen">
-    <aside className={`relative shrink-0 border border-r-zinc-300 ${isOpen ? "w-64" : "w-13"} transition-all duration-300 hidden md:flex items-center flex-col p-3 bg-amber-300 font-manrope`}>
-      <div onClick={() => setIsOpen(!isOpen)} className="absolute bottom-1/2 -right-2.5 rounded-full bg-zinc-100/95">
-        {isOpen ? <CircleChevronLeft size={20} color="#FFD230" /> : <CircleChevronRight size={20} color="#FFD230" />}
+    <aside
+      className={`relative shrink-0 border-r border-zinc-200/50 ${isOpen ? "w-64" : "w-16"
+        } transition-all duration-300 hidden md:flex flex-col bg-white/80 font-manrope`}
+    >
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="absolute top-1/2 -right-3 transform -translate-y-1/2 rounded-full bg-zinc-100 shadow-md cursor-pointer p-1"
+      >
+        {isOpen ? (
+          <CircleChevronLeft size={20} color="#FFD230" />
+        ) : (
+          <CircleChevronRight size={20} color="#FFD230" />
+        )}
       </div>
-      <div className="absolute top-2 left-2 w-full">
-        <div className="flex items-center gap-1 w-full">
-          <img src="/logo.svg" className="h-9 w-9" alt="Logo" />
-          {isOpen && <span className="font-bold text-xl text-black tracking-wide">Cortex</span>}
+
+      <div className="flex items-center px-4 py-5 bg-amber-400/50">
+        <img src="/logo.svg" className="h-8 w-8" alt="Logo" />
+        {isOpen && (
+          <span className="font-bold text-lg text-zinc-900 tracking-wide">
+            Cortex
+          </span>
+        )}
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1 cursor-default">
+        {isOpen ? <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2">Navigation</div> : <div></div>}
+        <div onClick={() => setOption("home")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "home" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "home" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <LayoutDashboard size={16} />
+          {isOpen && "Home"}
+        </div>
+        <div onClick={() => setOption("events")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "events" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "events" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <Theater size={16} />
+          {isOpen && "Events"}
+        </div>
+        <div onClick={() => setOption("orgs")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "orgs" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "orgs" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <Building2 size={16} />
+          {isOpen && "Organizations"}
+        </div>
+        <div onClick={() => setOption("bookings")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "bookings" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "bookings" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <Tickets size={16} />
+          {isOpen && "Bookings"}
+        </div>
+        <div onClick={() => setOption("settings")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "settings" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "settings" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <Settings size={16} />
+          {isOpen && "Settings"}
+        </div>
+        <div onClick={() => setOption("help")}
+          className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg ${option === "help" ? "bg-amber-400/10 text-amber-600  hover:bg-amber-400/20" : "text-zinc-600 hover:bg-zinc-100"}  font-medium text-sm transition-colors`}
+        >
+          {option === "help" && isOpen && <div className="absolute left-3 w-1.5 h-1.5 rounded-full bg-amber-500" />}
+          {isOpen && <div className="w-1.5 h-1.5 rounded-full bg-transparent" />}
+          <Headset size={16} />
+          {isOpen && "Help"}
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-full">
-        hi
+
+      <div className="px-4 py-3 border-t border-zinc-200 text-xs text-zinc-400">
+        v1.0.0 {isOpen && "• Production"}
       </div>
     </aside>
 
+
     <div className="md:hidden font-manrope">
-      <div className="fixed top-0 left-0 w-full h-16 px-6 bg-white/70 backdrop-blur-md flex items-center justify-between z-40 border-b border-zinc-200/50">
+      <div className="fixed top-0 left-0 w-full h-16 px-6 bg-zinc-50 backdrop-blur-md flex items-center justify-between z-40 border-b border-zinc-200/50">
         <div className="flex items-center ">
           <div className="p-1.5">
             <img src="/logo.svg" className="h-6 w-6" alt="Logo" />
@@ -60,18 +130,36 @@ export default function SidebarLayout({children}:{children : React.ReactElement}
         </div>
         <div className="flex-1 overflow-y-auto space-y-1.5">
           <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 px-3 mb-2">Navigation</div>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-400/10 text-amber-600 font-medium text-sm transition-colors">
-            <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            Dashboard
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-600 hover:bg-zinc-100 font-medium text-sm transition-colors">
-            <div className="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-zinc-400" />
-            Analytics
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-600 hover:bg-zinc-100 font-medium text-sm transition-colors">
-            <div className="w-1.5 h-1.5 rounded-full bg-transparent" />
+          <div onClick={() => setOption("home")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "home" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "home" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <LayoutDashboard size={16} />
+            Home
+          </div>
+          <div onClick={() => setOption("events")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "events" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "events" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <Theater size={16} />
+            Events
+          </div>
+          <div onClick={() => setOption("orgs")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "orgs" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "orgs" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <Building2 size={16} />
+            Organizations
+          </div>
+          <div onClick={() => setOption("bookings")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "bookings" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "bookings" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <Tickets size={16} />
+            Bookings
+          </div>
+          <div onClick={() => setOption("settings")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "settings" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "settings" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <Settings size={16} />
             Settings
-          </a>
+          </div>
+          <div onClick={() => setOption("help")} className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl ${option === "help" ? "bg-amber-400/10 text-amber-600 " : "text-zinc-600 hover:bg-zinc-100"} font-medium text-sm transition-colors`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${option === "help" ? "bg-amber-500" : "bg-transparent group-hover:bg-zinc-400"}`} />
+            <Headset size={16} />
+            Help
+          </div>
         </div>
         <div className="pt-4 border-t border-zinc-200 text-xs text-zinc-400">
           v1.0.0 • Production
