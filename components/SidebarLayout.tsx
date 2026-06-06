@@ -1,12 +1,12 @@
 "use client";
 import { CircleChevronLeft, CircleChevronRight, X, Menu, LayoutDashboard, Layout, Theater, Building2, Tickets, Settings, Headset } from "lucide-react";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
+import { optionTypes } from "@/app/dashboard/page";
+import { signOut } from "next-auth/react";
 
-type optionTypes = "home" | "events" | "orgs" | "bookings" | "settings" | "help";
-
-export default function SidebarLayout({ children }: { children: React.ReactElement }) {
+export default function SidebarLayout({ option, setOption, children }: { option: string, setOption: Dispatch<SetStateAction<optionTypes>>, children: React.ReactElement }) {
   const [isOpen, setIsOpen] = useState(true);
-  const [option, setOption] = useState<optionTypes>("home");
+  const [loading, setLoading] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return <div className="flex h-screen">
@@ -86,8 +86,16 @@ export default function SidebarLayout({ children }: { children: React.ReactEleme
         </div>
       </div>
 
-      <div className="px-4 py-3 border-t border-zinc-200 text-xs text-zinc-400">
-        v1.0.0 {isOpen && "• Production"}
+      <div className="px-4 py-3 flex justify-between items-center border-t border-zinc-200 text-xs text-zinc-400">
+        <p>v1.0.0 {isOpen && "• Production"}</p>
+        {isOpen && <button onClick={async () => {
+          setLoading(true);
+          try {
+            await signOut({ callbackUrl: "/signin" });
+          } finally {
+            setLoading(false);
+          }
+        }} disabled={loading} className="py-1 px-2 text-white bg-red-700 rounded-sm cursor-default hover:scale-95 disabled:scale-95 disabled:opacity-50">Log out</button>}
       </div>
     </aside>
 
@@ -161,8 +169,16 @@ export default function SidebarLayout({ children }: { children: React.ReactEleme
             Help
           </div>
         </div>
-        <div className="pt-4 border-t border-zinc-200 text-xs text-zinc-400">
-          v1.0.0 • Production
+        <div className="pt-4 border-t border-zinc-200 text-xs text-zinc-400 flex justify-between items-center">
+          <p>v1.0.0 • Production</p>
+          <button onClick={async () => {
+          setLoading(true);
+          try {
+            await signOut({ callbackUrl: "/signin" });
+          } finally {
+            setLoading(false);
+          }
+        }} disabled={loading} className="py-1 px-2 text-white bg-red-700 rounded-sm cursor-default hover:scale-95 disabled:scale-95 disabled:opacity-50">Log out</button>
         </div>
       </aside>
     </div>
