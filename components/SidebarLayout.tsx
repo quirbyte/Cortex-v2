@@ -25,7 +25,7 @@ export default function SidebarLayout({ option, setOption, children }: { option:
         )}
       </div>
 
-      <div className="flex items-center px-4 py-5 bg-amber-400/50">
+      <div className="flex items-center px-4 py-5 bg-amber-400">
         <img src="/logo.svg" className="h-8 w-8" alt="Logo" />
         {isOpen && (
           <span className="font-bold text-lg text-zinc-900 tracking-wide">
@@ -95,15 +95,15 @@ export default function SidebarLayout({ option, setOption, children }: { option:
           } finally {
             setLoading(false);
           }
-        }} disabled={loading} className="py-1 px-2 text-white bg-red-700 rounded-sm cursor-default hover:scale-95 disabled:scale-95 disabled:opacity-50">Log out</button>}
+        }} disabled={loading} className="py-1 px-2 text-white bg-red-500 rounded-sm cursor-default hover:scale-95 hover:bg-red-400 disabled:scale-95 disabled:bg-red-300">Log out</button>}
       </div>
     </aside>
 
 
     <div className="md:hidden font-manrope">
-      <div className="fixed top-0 left-0 w-full h-16 px-6 bg-zinc-50 backdrop-blur-md flex items-center justify-between z-40 border-b border-zinc-200/50">
+      <div className="fixed top-0 left-0 w-full h-16 px-4 bg-zinc-50 backdrop-blur-md flex items-center justify-between z-40 border-b border-zinc-200/50">
         <div className="flex items-center ">
-          <div className="p-1.5">
+          <div className="">
             <img src="/logo.svg" className="h-6 w-6" alt="Logo" />
           </div>
           <span className="font-bold text-lg text-zinc-900 tracking-tight">Cortex</span>
@@ -172,17 +172,17 @@ export default function SidebarLayout({ option, setOption, children }: { option:
         <div className="pt-4 border-t border-zinc-200 text-xs text-zinc-400 flex justify-between items-center">
           <p>v1.0.0 • Production</p>
           <button onClick={async () => {
-          setLoading(true);
-          try {
-            await signOut({ callbackUrl: "/signin" });
-          } finally {
-            setLoading(false);
-          }
-        }} disabled={loading} className="py-1 px-2 text-white bg-red-700 rounded-sm cursor-default hover:scale-95 disabled:scale-95 disabled:opacity-50">Log out</button>
+            setLoading(true);
+            try {
+              await signOut({ callbackUrl: "/signin" });
+            } finally {
+              setLoading(false);
+            }
+          }} disabled={loading} className="py-1 px-2 text-white bg-red-500 rounded-sm cursor-default hover:bg-red-400 hover:scale-95 disabled:scale-95 disabled:bg-red-300">Log out</button>
         </div>
       </aside>
     </div>
 
-    <main className="flex-1 p-4 pt-20 md:pt-4 overflow-y-auto h-full">{children}</main>
+    <main className="flex-1 pt-16 md:pl-0 md:pt-0 overflow-y-auto h-full">{children}</main>
   </div>
 }

@@ -14,8 +14,8 @@ export default function DashboardPage() {
   const [option, setOption] = useState<optionTypes>("home");
   return (
     <SidebarLayout option={option} setOption={setOption}>
-      <div>
-        {option === "home" && <HomePage />}
+      <div className="h-full w-full">
+        {option === "home" && <HomePage setOption={setOption} />}
         {option === "events" && <EventPage />}
         {option === "orgs" && <OrgPage />}
         {option === "bookings" && <BookingsPage />}
