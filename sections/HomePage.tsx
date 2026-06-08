@@ -1,7 +1,7 @@
-import { Dispatch,SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { optionTypes } from "@/app/dashboard/page";
 
-export default function HomePage({setOption}:{setOption: Dispatch<SetStateAction<optionTypes>>}) {
+export default function HomePage({ setOption }: { setOption: Dispatch<SetStateAction<optionTypes>> }) {
     return (
         <div className="min-h-screen w-full bg-zinc-50 font-manrope text-zinc-900 antialiased selection:bg-zinc-950 selection:text-white">
             <div className="bg-zinc-900 text-zinc-300 text-xs py-2 px-6 text-center tracking-wide font-medium border-b border-zinc-800">
@@ -32,7 +32,7 @@ export default function HomePage({setOption}:{setOption: Dispatch<SetStateAction
                             Discover verified live experiences, pick your ideal seating arrays, and complete instant ticket checkouts securely.
                         </p>
                         <div className="flex gap-3 w-full sm:w-auto">
-                            <button onClick={()=>setOption("events")} className="bg-white text-zinc-950 hover:bg-zinc-200 active:scale-98 px-6 py-3 rounded-xl font-bold text-sm shadow-md transition-all duration-200 w-full sm:w-auto">
+                            <button onClick={() => setOption("events")} className="bg-white text-zinc-950 hover:bg-zinc-200 active:scale-98 px-6 py-3 rounded-xl font-bold text-sm shadow-md transition-all duration-200 w-full sm:w-auto">
                                 Explore Live Events
                             </button>
                         </div>
@@ -44,46 +44,78 @@ export default function HomePage({setOption}:{setOption: Dispatch<SetStateAction
                     <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl shadow-xs flex flex-col justify-between group hover:border-zinc-300 transition-colors duration-300">
                         <div>
                             <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">Live Booking Desk</h3>
+                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">Live Ticket Drops</h3>
                                 <span className="flex h-2 w-2 relative">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                                 </span>
                             </div>
-                            <ul className="space-y-3 text-xs text-zinc-500 font-medium">
-                                <li className="flex items-center justify-between border-b border-zinc-100 pb-2">
-                                    <span>✦ Verified Venues</span>
-                                    <span className="font-mono text-[10px] bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-600">100% Secure</span>
-                                </li>
-                                <li className="flex items-center justify-between border-b border-zinc-100 pb-2">
-                                    <span>✦ Instant Ticket Generation</span>
-                                    <span className="font-mono text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">Enabled</span>
-                                </li>
-                                <li className="flex items-center justify-between border-b border-zinc-100 pb-2">
-                                    <span>✦ Refund Guarantee Policy</span>
-                                    <span className="font-mono text-[10px] bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-600">24h Window</span>
-                                </li>
-                                <li className="flex items-center justify-between">
-                                    <span>✦ Standard Gate Pass Entry</span>
-                                    <span className="font-mono text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">QR Ready</span>
-                                </li>
-                            </ul>
+                            <p className="text-lg font-black tracking-tight text-zinc-900 mb-2">High-Demand Queues</p>
+                            <p className="text-xs text-zinc-500 leading-relaxed mb-4">
+                                Track trending tickets selling out across the platform in real time. Hop into queues instantly.
+                            </p>
+
+                            <div className="space-y-3">
+                                <div>
+                                    <div className="flex justify-between text-xs mb-1 font-medium text-zinc-700">
+                                        <span>Next.js Summit SF</span>
+                                        <span className="text-red-500 font-bold font-mono">15% Left</span>
+                                    </div>
+                                    <div className="w-full bg-zinc-100 h-2 rounded-full overflow-hidden">
+                                        <div className="bg-red-500 h-full w-[85%] rounded-full"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="flex justify-between text-xs mb-1 font-medium text-zinc-700">
+                                        <span>Echoes of Autumn</span>
+                                        <span className="text-amber-500 font-bold font-mono">42% Left</span>
+                                    </div>
+                                    <div className="w-full bg-zinc-100 h-2 rounded-full overflow-hidden">
+                                        <div className="bg-amber-500 h-full w-[58%] rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <button
+                            onClick={() => setOption("events")}
+                            className="mt-5 text-xs font-bold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 py-2 rounded-xl text-center transition-colors w-full"
+                        >
+                            Browse Active Queues →
+                        </button>
                     </div>
 
                     <div className="bg-zinc-950 text-zinc-100 p-6 rounded-2xl shadow-xs flex flex-col justify-between border border-zinc-900">
                         <div>
                             <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Host Dashboard</h3>
-                                <span className="text-[10px] font-mono text-zinc-500">Analytics Summary</span>
+                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Network Pulse</h3>
+                                <span className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">System Normal</span>
                             </div>
-                            <p className="text-lg font-black tracking-tight text-white mb-2">Organizer Benefits</p>
-                            <p className="text-xs text-zinc-400 leading-relaxed">List your custom venues, coordinate seat configurations, and manage bulk reservation distributions seamlessly.</p>
+                            <p className="text-lg font-black tracking-tight text-white mb-2">Live App Bookings</p>
+                            <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+                                Real-time transaction logs and user check-ins happening across our public event infrastructure.
+                            </p>
+
+                            <div className="font-mono text-[11px] space-y-2 bg-zinc-900 p-3 rounded-xl border border-zinc-800/60">
+                                <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-emerald-400">●</span>
+                                    <span className="text-zinc-500">User_382</span> booked Football Cup
+                                </div>
+                                <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-emerald-400">●</span>
+                                    <span className="text-zinc-500">User_914</span> scanned Modernity Expo Pass
+                                </div>
+                                <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-emerald-400">●</span>
+                                    <span className="text-zinc-500">User_112</span> downloaded Ticket PDF
+                                </div>
+                            </div>
                         </div>
-                        <div className="mt-6 font-mono text-[11px] text-zinc-400 bg-zinc-900 p-3 rounded-xl border border-zinc-800/60 space-y-1">
-                            <div className="text-zinc-500">Active Attendee Checkout Loop:</div>
-                            <div className="text-emerald-400">✓ Secure Stripe Gateway Synced</div>
-                            <div className="text-zinc-500 text-[10px]">↳ Processed 1,200+ event bookings today</div>
+
+                        <div className="mt-4 flex justify-between items-center text-[10px] font-mono text-zinc-500">
+                            <span>API Latency: 42ms</span>
+                            <span>Secured via Stripe</span>
                         </div>
                     </div>
 
@@ -111,7 +143,7 @@ export default function HomePage({setOption}:{setOption: Dispatch<SetStateAction
                         <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Handpicked Selections</h3>
                         <h2 className="text-2xl font-black tracking-tight text-zinc-900">Top Deployed Events</h2>
                     </div>
-                    <button onClick={()=>setOption("events")} className="text-xs font-bold text-zinc-600 hover:text-zinc-950 underline underline-offset-4 transition-colors">
+                    <button onClick={() => setOption("events")} className="text-xs font-bold text-zinc-600 hover:text-zinc-950 underline underline-offset-4 transition-colors">
                         View All Events
                     </button>
                 </div>
