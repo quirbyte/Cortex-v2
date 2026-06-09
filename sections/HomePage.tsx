@@ -1,243 +1,221 @@
-import { Dispatch, SetStateAction } from "react";
-import { optionTypes } from "@/app/dashboard/page";
+"use client";
+import { ChevronLeft, ChevronRight, TicketCheck, TrendingUp, Calendar, Share2Icon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function HomePage({ setOption }: { setOption: Dispatch<SetStateAction<optionTypes>> }) {
+export default function HomePage() {
+    const [current, setCurrent] = useState(0);
+    const events = [
+        {
+            title: "Echoes of Autumn Concert",
+            desc: "Experience live music at Madison Square Garden with amazing acoustics and visuals.",
+            img: "eventsHeader.jpg",
+        },
+        {
+            title: "Global Championship 2026",
+            desc: "Catch the world's finest athletic showdown streaming live from Levi's Stadium.",
+            img: "eventsHeader.jpg",
+        },
+        {
+            title: "Minimalism & Modern Art",
+            desc: "Explore deep historical exhibits and contemporary design trends this weekend.",
+            img: "eventsHeader.jpg",
+        },
+    ];
+
+    const prevSlide = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setCurrent((current - 1 + events.length) % events.length);
+    };
+
+    const nextSlide = () => {
+        setCurrent((prevCurrent) => (prevCurrent + 1) % events.length);
+    };
+
+    useEffect(() => {
+        const timer = setInterval(nextSlide, 5000);
+        return () => clearInterval(timer);
+    }, [events.length]);
+
     return (
-        <div className="min-h-screen w-full bg-zinc-50 font-manrope text-zinc-900 antialiased selection:bg-zinc-950 selection:text-white">
-            <div className="bg-zinc-900 text-zinc-300 text-xs py-2 px-6 text-center tracking-wide font-medium border-b border-zinc-800">
-                🔥 Trending: <span className="text-amber-400 font-bold">Next.js Micro-Summit SF</span> tickets are 85% sold out. Book yours now!
+        <div className="min-h-screen w-full pt-5 p-4 font-manrope bg-zinc-50/50">
+            <header className="flex items-center justify-between w-full border-b border-black/5 pb-4">
+                <div className="hidden md:block">
+                    <p className="text-zinc-400 text-xs font-semibold tracking-wider uppercase">Welcome back,</p>
+                    <p className="text-xl font-bold tracking-tight text-black">Soumyadip</p>
+                </div>
+                <div className="flex flex-col items-end w-full md:w-auto">
+                    <h1 className="text-xl tracking-tight font-black text-black">Dashboard</h1>
+                    <p className="text-xs text-amber-600 font-mono mt-0.5">Tuesday, 9th June, 2026</p>
+                </div>
+            </header>
+
+            <div className="relative mt-3 w-full rounded-2xl bg-black overflow-hidden flex flex-col md:flex-row h-120 md:h-96 shadow-sm group">
+                <div className="relative w-full md:w-3/5 h-1/2 md:h-full shrink-0 overflow-hidden">
+                    <img
+                        src={events[current].img}
+                        alt={events[current].title}
+                        className="h-full w-full object-cover transition-all duration-500 ease-out scale-100"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black md:bg-linear-to-r md:from-transparent md:to-black/80" />
+                </div>
+
+                <div className="relative flex-1 h-1/2 md:h-full bg-black p-6 md:p-10 flex flex-col justify-center items-start text-left z-10">
+                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-2.5 py-1 rounded-full mb-3">
+                        Featured Event
+                    </span>
+                    <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white line-clamp-2 transition-all">
+                        {events[current].title}
+                    </h2>
+                    <p className="mt-2.5 text-zinc-400 text-xs md:text-sm tracking-wide leading-relaxed line-clamp-3 md:max-w-[90%]">
+                        {events[current].desc}
+                    </p>
+                    <button className="mt-5 px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-black font-bold text-xs md:text-sm tracking-tight transition-all active:scale-[0.98] cursor-pointer shadow-md shadow-amber-400/10">
+                        Book Tickets Now
+                    </button>
+                </div>
+
+                <button
+                    onClick={prevSlide}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex justify-center items-center p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg text-white opacity-100 md:opacity-0 group-hover:opacity-100 hover:bg-white hover:text-black transition-all cursor-pointer"
+                    aria-label="Previous Slide"
+                >
+                    <ChevronLeft size={18} />
+                </button>
+
+                <button
+                    onClick={nextSlide}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex justify-center items-center p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg text-white opacity-100 md:opacity-0 group-hover:opacity-100 hover:bg-white hover:text-black transition-all cursor-pointer"
+                    aria-label="Next Slide"
+                >
+                    <ChevronRight size={18} />
+                </button>
+
+                <div className="absolute right-6 bottom-4 z-20 flex space-x-1.5 bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
+                    {events.map((_, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => setCurrent(idx)}
+                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === current ? "w-4 bg-amber-400" : "w-1.5 bg-white/40 hover:bg-white/60"
+                                }`}
+                            aria-label={`Go to slide ${idx + 1}`}
+                        />
+                    ))}
+                </div>
             </div>
 
-            <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <h1 className="text-left text-3xl tracking-tighter font-bold my-7">Trending</h1>
 
-                <header className="flex justify-end w-full border-b-2 border-black mb-3">
-                    <p className="uppercase italic font-extrabold text-3xl mr-3 -mt-3">Home</p>
-                </header>
+            <div className="mt-8 flex flex-col lg:flex-row w-full gap-5">
+                <div className="w-full lg:w-1/2 h-100 bg-white border border-black/10 rounded-2xl flex flex-col p-5 shadow-xs">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/5">
+                        <div className="flex items-center gap-2">
+                            <TrendingUp size={18} className="text-amber-500" />
+                            <h2 className="text-sm font-bold tracking-tight text-black">Top Events</h2>
+                        </div>
+                        <span className="text-[10px] bg-zinc-100 px-2.5 py-1 rounded-md font-bold text-zinc-500 tracking-wide uppercase">Hot Now</span>
+                    </div>
 
-                <div className="relative w-full h-72 md:h-96 rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/50 group bg-zinc-950 mb-10 border border-zinc-800">
-                    <img
-                        src="/eventsHeader.jpg"
-                        alt="Concert and event crowd background"
-                        className="w-full h-full object-cover opacity-50 group-hover:scale-[1.01] transition-transform duration-1000 ease-out"
-                    />
+                    <div className="flex-1 flex flex-col gap-2.5 overflow-y-auto no-scrollbar">
+                        {events.map((event, idx) => (
+                            <div
+                                key={idx}
+                                className="w-full bg-zinc-50 border border-black/5 flex items-center justify-between p-3.5 rounded-xl font-medium transition-all duration-200 hover:bg-black hover:text-white group/row"
+                            >
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <span className="text-xs font-mono text-black/40 group-hover/row:text-white/40">0{idx + 1}</span>
+                                    <p className="text-xs md:text-sm font-bold truncate text-zinc-800 group-hover/row:text-white">{event.title}</p>
+                                </div>
 
-                    <div className="absolute inset-0 bg-linear-to-tr from-zinc-950 via-zinc-950/60 to-transparent p-8 md:p-14 flex flex-col justify-end items-start">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase bg-white/10 text-zinc-300 border border-white/10 backdrop-blur-md mb-2">
-                            Featured Experience
+                                <button className="shrink-0 ml-4 py-1.5 px-3 rounded-lg bg-black text-white text-[11px] font-bold tracking-tight border border-white/10 group-hover/row:bg-amber-400 group-hover/row:text-black transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer">
+                                    <TicketCheck size={13} />
+                                    <span className="hidden sm:inline">Book Now</span>
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="w-full lg:w-1/2 h-100 bg-white border border-black/10 rounded-2xl p-5 flex flex-col shadow-xs">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/5">
+                        <div className="flex items-center gap-2">
+                            <Calendar size={18} className="text-amber-500" />
+                            <h2 className="text-sm font-bold tracking-tight text-black">Event Calendar</h2>
+                        </div>
+                        <span className="text-[10px] bg-black text-white px-2.5 py-1 rounded-md font-mono font-bold tracking-wide uppercase">
+                            June 2026
                         </span>
-                        <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white max-w-xl leading-none mb-4">
-                            The intelligence behind every event.
-                        </h1>
-                        <p className="text-zinc-400 text-sm md:text-base max-w-md mb-6 leading-relaxed">
-                            Discover verified live experiences, pick your ideal seating arrays, and complete instant ticket checkouts securely.
-                        </p>
-                        <div className="flex gap-3 w-full sm:w-auto">
-                            <button onClick={() => setOption("events")} className="bg-white text-zinc-950 hover:bg-zinc-200 active:scale-98 px-6 py-3 rounded-xl font-bold text-sm shadow-md transition-all duration-200 w-full sm:w-auto">
-                                Explore Live Events
-                            </button>
+                    </div>
+
+                    <div className="grid grid-cols-7 gap-1 text-center mb-2">
+                        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+                            <span key={day} className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+                                {day}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-7 gap-1 flex-1 text-center items-center">
+                        <div className="h-9" />
+                        {Array.from({ length: 30 }).map((_, i) => {
+                            const dayNumber = i + 1;
+                            const isToday = dayNumber === 9;
+                            const isBooked = dayNumber === 12 || dayNumber === 21;
+
+                            return (
+                                <div key={dayNumber} className="relative flex items-center justify-center h-9">
+                                    <button
+                                        disabled={!isBooked && !isToday}
+                                        className={`h-8 w-8 rounded-lg text-xs font-mono font-bold flex flex-col items-center justify-center transition-all duration-150 ${isBooked
+                                            ? "bg-black text-white shadow-sm ring-1 ring-black/10 cursor-pointer hover:bg-zinc-800"
+                                            : isToday
+                                                ? "bg-amber-400 text-black font-black ring-2 ring-amber-400/20"
+                                                : "text-zinc-600 hover:bg-zinc-100 cursor-default"
+                                            }`}
+                                    >
+                                        <span>{dayNumber}</span>
+
+                                        {isBooked && (
+                                            <span className="h-1 w-1 rounded-full bg-amber-400 mt-0.5 animate-pulse" />
+                                        )}
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2 pt-4 border-t border-black/5 mt-3 text-[10px] font-bold text-zinc-500">
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
+                            <span className="h-2 w-2 rounded-sm bg-amber-400" />
+                            <span>Today</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
+                            <span className="h-2 w-2 rounded-sm bg-black" />
+                            <span>Booked (2)</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
+                            <span className="h-2 w-2 rounded-sm bg-zinc-200" />
+                            <span>Available</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-                    <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl shadow-xs flex flex-col justify-between group hover:border-zinc-300 transition-colors duration-300">
-                        <div>
-                            <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">Live Ticket Drops</h3>
-                                <span className="flex h-2 w-2 relative">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                                </span>
-                            </div>
-                            <p className="text-lg font-black tracking-tight text-zinc-900 mb-2">High-Demand Queues</p>
-                            <p className="text-xs text-zinc-500 leading-relaxed mb-4">
-                                Track trending tickets selling out across the platform in real time. Hop into queues instantly.
-                            </p>
-
-                            <div className="space-y-3">
-                                <div>
-                                    <div className="flex justify-between text-xs mb-1 font-medium text-zinc-700">
-                                        <span>Next.js Summit SF</span>
-                                        <span className="text-red-500 font-bold font-mono">15% Left</span>
-                                    </div>
-                                    <div className="w-full bg-zinc-100 h-2 rounded-full overflow-hidden">
-                                        <div className="bg-red-500 h-full w-[85%] rounded-full"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div className="flex justify-between text-xs mb-1 font-medium text-zinc-700">
-                                        <span>Echoes of Autumn</span>
-                                        <span className="text-amber-500 font-bold font-mono">42% Left</span>
-                                    </div>
-                                    <div className="w-full bg-zinc-100 h-2 rounded-full overflow-hidden">
-                                        <div className="bg-amber-500 h-full w-[58%] rounded-full"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={() => setOption("events")}
-                            className="mt-5 text-xs font-bold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 py-2 rounded-xl text-center transition-colors w-full"
-                        >
-                            Browse Active Queues →
-                        </button>
-                    </div>
-
-                    <div className="bg-zinc-950 text-zinc-100 p-6 rounded-2xl shadow-xs flex flex-col justify-between border border-zinc-900">
-                        <div>
-                            <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Network Pulse</h3>
-                                <span className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">System Normal</span>
-                            </div>
-                            <p className="text-lg font-black tracking-tight text-white mb-2">Live App Bookings</p>
-                            <p className="text-xs text-zinc-400 leading-relaxed mb-4">
-                                Real-time transaction logs and user check-ins happening across our public event infrastructure.
-                            </p>
-
-                            <div className="font-mono text-[11px] space-y-2 bg-zinc-900 p-3 rounded-xl border border-zinc-800/60">
-                                <div className="flex items-center gap-2 text-zinc-300">
-                                    <span className="text-emerald-400">●</span>
-                                    <span className="text-zinc-500">User_382</span> booked Football Cup
-                                </div>
-                                <div className="flex items-center gap-2 text-zinc-300">
-                                    <span className="text-emerald-400">●</span>
-                                    <span className="text-zinc-500">User_914</span> scanned Modernity Expo Pass
-                                </div>
-                                <div className="flex items-center gap-2 text-zinc-300">
-                                    <span className="text-emerald-400">●</span>
-                                    <span className="text-zinc-500">User_112</span> downloaded Ticket PDF
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-4 flex justify-between items-center text-[10px] font-mono text-zinc-500">
-                            <span>API Latency: 42ms</span>
-                            <span>Secured via Stripe</span>
-                        </div>
-                    </div>
-
-                    <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-colors duration-300">
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400 mb-4">Total Attendees Managed</h3>
-                            <div className="flex items-baseline gap-2">
-                                <span className="text-4xl font-black tracking-tight text-zinc-900">48.2K</span>
-                                <span className="text-xs font-bold text-emerald-600 font-mono bg-emerald-50 px-1.5 py-0.5 rounded">+24% Monthly</span>
-                            </div>
-                            <p className="text-xs text-zinc-400 mt-2 leading-relaxed">Aggregated ticket confirmations and corporate seat allocations fulfilled across public and private events.</p>
-                        </div>
-                        <div className="mt-6 h-10 w-full flex items-end gap-1 pt-2">
-                            <div className="bg-zinc-200 h-4 w-full rounded-sm hover:bg-zinc-900 transition-colors"></div>
-                            <div className="bg-zinc-200 h-6 w-full rounded-sm hover:bg-zinc-900 transition-colors"></div>
-                            <div className="bg-zinc-200 h-5 w-full rounded-sm hover:bg-zinc-900 transition-colors"></div>
-                            <div className="bg-zinc-200 h-8 w-full rounded-sm hover:bg-zinc-900 transition-colors"></div>
-                            <div className="bg-zinc-900 h-10 w-full rounded-sm"></div>
-                        </div>
-                    </div>
+            <h1 className="text-left text-3xl tracking-tighter font-bold mt-7">Share with people</h1>
+            <div className="mt-3 flex gap-4 items-center">
+                <div>
+                    <img src="/favicon.svg" alt="" className="w-13 h-13 object-cover" />
                 </div>
-
-                <div className="flex justify-between items-end mb-6 w-full">
-                    <div>
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Handpicked Selections</h3>
-                        <h2 className="text-2xl font-black tracking-tight text-zinc-900">Top Deployed Events</h2>
-                    </div>
-                    <button onClick={() => setOption("events")} className="text-xs font-bold text-zinc-600 hover:text-zinc-950 underline underline-offset-4 transition-colors">
-                        View All Events
-                    </button>
+                <div>
+                    <p className="font-semibold text-sm md:text-md">Spread the word</p>
+                    <p className="font-light text-[10px]">Help us grow</p>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div className="bg-white border border-zinc-200/80 rounded-2xl overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-300 group transition-all duration-300 flex flex-col">
-                        <div className="relative h-44 bg-zinc-900 w-full overflow-hidden flex items-center justify-center text-zinc-700 text-4xl group-hover:scale-105 transition-transform duration-500">
-                            🎤
-                        </div>
-                        <div className="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-mono tracking-wider font-bold uppercase bg-zinc-100 px-2 py-0.5 rounded text-zinc-600">Concerts</span>
-                                    <span className="text-xs font-bold text-emerald-600">Tickets Available</span>
-                                </div>
-                                <h4 className="font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors text-base tracking-tight mb-1">
-                                    Echoes of Autumn Arena Tour
-                                </h4>
-                                <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">
-                                    An immersive live acoustic experience featuring global indie artists with state-of-the-art stadium laser orchestration.
-                                </p>
-                            </div>
-                            <div className="flex justify-between items-center pt-4 mt-4 border-t border-zinc-100 font-mono text-[11px] text-zinc-400">
-                                <span>Madison Square Garden</span>
-                                <span className="text-zinc-900 font-bold">$75 onwards</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white border border-zinc-200/80 rounded-2xl overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-300 group transition-all duration-300 flex flex-col">
-                        <div className="relative h-44 bg-zinc-900 w-full overflow-hidden flex items-center justify-center text-zinc-700 text-4xl group-hover:scale-105 transition-transform duration-500">
-                            🏆
-                        </div>
-                        <div className="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-mono tracking-wider font-bold uppercase bg-zinc-100 px-2 py-0.5 rounded text-zinc-600">Sports</span>
-                                    <span className="text-xs font-bold text-amber-600">Selling Fast</span>
-                                </div>
-                                <h4 className="font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors text-base tracking-tight mb-1">
-                                    Global Champions Football Cup
-                                </h4>
-                                <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">
-                                    The ultimate championship showdown. Catch the world's highest-ranked clubs matching up for the golden silverware.
-                                </p>
-                            </div>
-                            <div className="flex justify-between items-center pt-4 mt-4 border-t border-zinc-100 font-mono text-[11px] text-zinc-400">
-                                <span>Levi's Stadium, CA</span>
-                                <span className="text-zinc-900 font-bold">$120 onwards</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white border border-zinc-200/80 rounded-2xl overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-300 group transition-all duration-300 flex flex-col">
-                        <div className="relative h-44 bg-zinc-900 w-full overflow-hidden flex items-center justify-center text-zinc-700 text-4xl group-hover:scale-105 transition-transform duration-500">
-                            🖼️
-                        </div>
-                        <div className="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-mono tracking-wider font-bold uppercase bg-zinc-100 px-2 py-0.5 rounded text-zinc-600">Exhibitions</span>
-                                    <span className="text-xs font-bold text-zinc-400">Last Few Seats</span>
-                                </div>
-                                <h4 className="font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors text-base tracking-tight mb-1">
-                                    Minimalism & Modernity Expo
-                                </h4>
-                                <p className="text-xs text-zinc-500 leading-relaxed line-clamp-2">
-                                    A curated gallery display investigating architectural design paradigms, high-contrast monochrome canvas, and scale.
-                                </p>
-                            </div>
-                            <div className="flex justify-between items-center pt-4 mt-4 border-t border-zinc-100 font-mono text-[11px] text-zinc-400">
-                                <span>The Met Modern, NY</span>
-                                <span className="text-zinc-900 font-bold">$30 onwards</span>
-                            </div>
-                        </div>
-                    </div>
+                <div className="flex gap-3 items-center ml-7">
+                    <img src="/linkedin.svg" alt="" className="h-8 w-8 flex items-center justify-center rounded-full object-contain" />
+                    <div className="bg-green-800 h-8 w-8 flex items-center justify-center rounded-full"><Share2Icon size={18} color="white" /></div>
                 </div>
-
-                <div className="bg-white border border-zinc-200/80 p-8 rounded-3xl shadow-xs hover:border-zinc-300 transition-all duration-300 flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between w-full">
-                    <div className="flex gap-4 items-start">
-                        <div className="h-12 w-12 shrink-0 rounded-2xl bg-zinc-950 text-white flex items-center justify-center text-lg shadow-md shadow-zinc-900/10">
-                            ➕
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-bold tracking-tight text-zinc-900 mb-1">Planning to launch your own event?</h3>
-                            <p className="text-sm text-zinc-500 max-w-2xl leading-relaxed">
-                                Connect your business profile to our manager tools to generate seamless custom registration pages, map seating charts, verify entry tickers via QR scanning codes, and check live earnings analytics payout streams.
-                            </p>
-                        </div>
-                    </div>
-                    <button className="bg-zinc-950 text-white hover:bg-zinc-800 active:scale-98 px-5 py-2.5 rounded-xl font-bold text-xs tracking-wide shadow-sm transition-all whitespace-nowrap w-full lg:w-auto">
-                        Create Event Listing
-                    </button>
-                </div>
+            </div>
+            <div className="mt-7 text-[10px] text-zinc-500">
+                © 2026 Cortex. All rights reserved
             </div>
         </div>
     );
