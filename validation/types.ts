@@ -5,3 +5,8 @@ export const signupObject = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
+
+export const orgObject = z.object({
+  name: z.string().min(6),
+  slug: z.string(),
+});

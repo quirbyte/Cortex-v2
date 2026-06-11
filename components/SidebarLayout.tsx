@@ -1,13 +1,33 @@
 "use client";
-import { CircleChevronLeft, CircleChevronRight, X, Menu, LayoutDashboard, Theater, Building2, Tickets, Settings, Headset } from "lucide-react";
-import { useState, Dispatch, SetStateAction } from "react";
-import { optionTypes } from "@/app/dashboard/page";
-import { signOut } from "next-auth/react";
 
-export default function SidebarLayout({ option, setOption, children }: { option: string, setOption: Dispatch<SetStateAction<optionTypes>>, children: React.ReactElement }) {
+import Link from "next/link";
+import { useTransition, useState } from "react";
+import { signOut } from "next-auth/react";
+import { 
+  CircleChevronLeft, 
+  CircleChevronRight, 
+  X, 
+  Menu, 
+  LayoutDashboard, 
+  Theater, 
+  Building2, 
+  Tickets, 
+  Settings, 
+  Headset 
+} from "lucide-react";
+
+import { OptionTypes } from "@/app/dashboard/page";
+
+interface SidebarLayoutProps {
+  activeTab: OptionTypes;
+  children: React.ReactNode;
+}
+
+export default function SidebarLayout({ activeTab, children }: SidebarLayoutProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const menuItems = [
     { id: "home", label: "Home", icon: <LayoutDashboard size={16} /> },
@@ -20,7 +40,6 @@ export default function SidebarLayout({ option, setOption, children }: { option:
 
   return (
     <div className="flex h-screen w-full bg-white font-manrope text-black antialiased overflow-hidden">
-      
       <aside
         className={`relative shrink-0 border-r border-black/10 ${
           isOpen ? "w-64" : "w-18"
@@ -35,7 +54,7 @@ export default function SidebarLayout({ option, setOption, children }: { option:
         
         <div className="flex items-center px-5 py-6 border-b border-black/10">
           <div className="w-8 h-8 rounded flex items-center justify-center shrink-0">
-            <img src="/logo.svg" alt="pic" className="h-full w-full" />
+            <img src="/logo.svg" alt="logo" className="h-full w-full" />
           </div>
           {isOpen && <span className="font-black text-xl tracking-tight text-black ml-3">Cortex</span>}
         </div>
@@ -47,17 +66,17 @@ export default function SidebarLayout({ option, setOption, children }: { option:
             </div>
           )}
           {menuItems.map((item) => {
-            const isActive = option === item.id;
+            const isActive = activeTab === item.id;
             return (
-              <div
+              <Link
                 key={item.id}
-                onClick={() => setOption(item.id as optionTypes)}
+                href={`/dashboard?tab=${item.id}`}
                 style={{
                   backgroundColor: isActive ? '#000000' : 'transparent',
                   color: isActive ? '#ffffff' : 'rgba(0, 0, 0, 0.6)'
                 }}
-                className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl cursor-pointer font-semibold text-sm select-none ${
-                  !isActive && "hover:text-black hover:bg-black/5 transition-colors duration-100"
+                className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${
+                  !isActive ? "hover:text-black hover:bg-black/5 transition-colors duration-100" : ""
                 }`}
               >
                 <div 
@@ -67,12 +86,12 @@ export default function SidebarLayout({ option, setOption, children }: { option:
                 />
                 <div 
                   style={{ color: isActive ? '#FFD230' : undefined }}
-                  className={`shrink-0 ${!isActive && "text-black/40 group-hover:text-black transition-colors duration-100"}`}
+                  className={`shrink-0 ${!isActive ? "text-black/40 group-hover:text-black transition-colors duration-100" : ""}`}
                 >
                   {item.icon}
                 </div>
                 {isOpen && <span>{item.label}</span>}
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -104,7 +123,7 @@ export default function SidebarLayout({ option, setOption, children }: { option:
         <div className="fixed top-0 left-0 w-full h-16 px-4 bg-white/80 backdrop-blur-md flex items-center justify-between z-40 border-b border-black/10">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded flex items-center justify-center">
-              <img src="/logo.svg" alt="pic" className="h-full w-full" />
+              <img src="/logo.svg" alt="logo" className="h-full w-full" />
             </div>
             <span className="font-black text-lg tracking-tight text-black">Cortex</span>
           </div>
@@ -135,7 +154,7 @@ export default function SidebarLayout({ option, setOption, children }: { option:
         >
           <div className="flex items-center pb-5 border-b border-black/10 mb-6 mt-16">
             <div className="w-6 h-6 rounded flex items-center justify-center">
-              <img src="/logo.svg" alt="pic" className="h-full w-full" />
+              <img src="/logo.svg" alt="logo" className="h-full w-full" />
             </div>
             <span className="font-black text-md tracking-tight text-black ml-2">Cortex</span>
           </div>
@@ -145,30 +164,28 @@ export default function SidebarLayout({ option, setOption, children }: { option:
               Navigation
             </div>
             {menuItems.map((item) => {
-              const isActive = option === item.id;
+              const isActive = activeTab === item.id;
               return (
-                <div
+                <Link
                   key={item.id}
-                  onClick={() => {
-                    setOption(item.id as optionTypes);
-                    setIsMobileOpen(false);
-                  }}
+                  href={`/dashboard?tab=${item.id}`}
+                  onClick={() => setIsMobileOpen(false)}
                   style={{
                     backgroundColor: isActive ? '#000000' : 'transparent',
                     color: isActive ? '#ffffff' : 'rgba(0, 0, 0, 0.6)'
                   }}
-                  className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl cursor-pointer font-semibold text-sm select-none ${
-                    !isActive && "hover:text-black hover:bg-black/4 transition-colors duration-100"
+                  className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${
+                    !isActive ? "hover:text-black hover:bg-black/4 transition-colors duration-100" : ""
                   }`}
                 >
                   <div 
                     style={{ color: isActive ? '#FFD230' : undefined }}
-                    className={`shrink-0 ${!isActive && "text-black/40 group-hover:text-black transition-colors duration-100"}`}
+                    className={`shrink-0 ${!isActive ? "text-black/40 group-hover:text-black transition-colors duration-100" : ""}`}
                   >
                     {item.icon}
                   </div>
                   <span>{item.label}</span>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -181,17 +198,21 @@ export default function SidebarLayout({ option, setOption, children }: { option:
                 try { await signOut({ callbackUrl: "/signin" }); } finally { setLoading(false); }
               }}
               disabled={loading}
-              className="py-1.5 px-3 text-xs font-bold text-white bg-black hover:bg-zinc-900 rounded-lg transition-all disabled:opacity-50"
+              className="py-1.5 px-3 text-xs font-bold text-white bg-black hover:bg-zinc-900 rounded-xl transition-all disabled:opacity-50"
             >
               Log out
             </button>
           </div>
         </aside>
       </div>
-      <main className="flex-1 pt-12 pb-8 px-4 md:px-0 md:pt-0 overflow-y-auto h-full w-full z-10 bg-white">
+
+      <main 
+        className={`flex-1 pt-12 pb-8 px-4 md:px-0 md:pt-0 overflow-y-auto h-full w-full z-10 bg-white transition-opacity duration-150 ${
+          isPending ? "opacity-60" : "opacity-100"
+        }`}
+      >
         {children}
       </main>
-
     </div>
   );
 }

@@ -1,33 +1,45 @@
-"use client";
+import { Suspense } from "react";
 import SidebarLayout from "@/components/SidebarLayout";
-import BookingsPage from "@/sections/BookingPage";
-import EventPage from "@/sections/EventsPage";
-import HelpPage from "@/sections/HelpPage";
 import HomePage from "@/sections/HomePage";
+import EventPage from "@/sections/EventsPage";
 import OrgPage from "@/sections/OrgPage";
+import BookingsPage from "@/sections/BookingPage";
 import SettingsPage from "@/sections/SettingPage";
-import { useState, useTransition } from "react"; // 1. Import useTransition
+import HelpPage from "@/sections/HelpPage";
+import { LoadingTabSkeleton } from "@/DesignComponents/loader";
 
-export type optionTypes = "home" | "events" | "orgs" | "bookings" | "settings" | "help";
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
-  const [option, setOption] = useState<optionTypes>("home");
-  const [isPending, startTransition] = useTransition();
-  const handleSetOption = (newOption: optionTypes | ((prev: optionTypes) => optionTypes)) => {
-    startTransition(() => {
-      setOption(newOption);
-    });
-  };
+export type OptionTypes = "home" | "events" | "orgs" | "bookings" | "settings" | "help";
+
+interface PageProps {
+  searchParams: Promise<{ tab?: string }>;
+}
+
+export default async function DashboardPage({ searchParams }: PageProps) {
+  const resolvedParams = await searchParams;
+  const currentTab = (resolvedParams.tab as OptionTypes) || "home";
 
   return (
-    <SidebarLayout option={option} setOption={handleSetOption}>
-      <div className={`h-full w-full transition-opacity duration-150 ${isPending ? "opacity-70" : "opacity-100"}`}>
-        {option === "home" && <HomePage />}
-        {option === "events" && <EventPage />}
-        {option === "orgs" && <OrgPage />}
-        {option === "bookings" && <BookingsPage />}
-        {option === "settings" && <SettingsPage />}
-        {option === "help" && <HelpPage />}
+    <SidebarLayout activeTab={currentTab}>
+      <div className="h-full w-full">
+        {currentTab === "home" && <HomePage />}
+        {currentTab === "events" && (
+          <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
+            <EventPage />
+          </Suspense>
+        )}
+
+        {/* built-in wrapper component that lets you orchestrate loading states for your user interface */}
+        {currentTab === "orgs" && (
+          <Suspense fallback={<LoadingTabSkeleton data={"user organizations"} />}>
+            <OrgPage />
+          </Suspense>
+        )}
+
+        {currentTab === "bookings" && <BookingsPage />}
+        {currentTab === "settings" && <SettingsPage />}
+        {currentTab === "help" && <HelpPage />}
       </div>
     </SidebarLayout>
   );
