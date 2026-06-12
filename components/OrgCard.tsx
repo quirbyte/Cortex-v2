@@ -27,6 +27,14 @@ export default function OrgCard({ id, name, slug, role, createdAt }: Organizatio
         }
     }
 
+    const handleOrgEntry = async () => {
+        try{
+            router.push(`/dashboard/${slug}`);
+        }catch{
+            console.log("Unable to access Org page");
+        }
+    }
+
     return (
         <div className="group relative flex flex-col justify-between h-56 w-full rounded-2xl border border-zinc-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-zinc-300 overflow-hidden font-manrope">
             <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-zinc-50 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:bg-amber-100 z-0" />
@@ -54,7 +62,7 @@ export default function OrgCard({ id, name, slug, role, createdAt }: Organizatio
                         <p className="text-xs tracking-wider font-semibold text-zinc-500 uppercase mt-0.5">{role}</p>
                     </div>
 
-                    <button
+                    <button onClick={handleOrgEntry}
                         className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-900 text-white shadow-sm transition-all duration-200 hover:bg-zinc-600 active:scale-95"
                         aria-label="Enter organization"
                     >

@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import SidebarLayout from "@/components/SidebarLayout";
 import HomePage from "@/sections/HomePage";
 import EventPage from "@/sections/EventsPage";
 import OrgPage from "@/sections/OrgPage";
@@ -21,8 +20,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const currentTab = (resolvedParams.tab as OptionTypes) || "home";
 
   return (
-    <SidebarLayout activeTab={currentTab}>
-      <div className="h-full w-full">
+    <>
         {currentTab === "home" && <HomePage />}
         {currentTab === "events" && (
           <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
@@ -40,7 +38,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         {currentTab === "bookings" && <BookingsPage />}
         {currentTab === "settings" && <SettingsPage />}
         {currentTab === "help" && <HelpPage />}
-      </div>
-    </SidebarLayout>
+      
+    </>
   );
 }

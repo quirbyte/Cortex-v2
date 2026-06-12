@@ -1,33 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { useTransition, useState } from "react";
+import { useTransition, useState, Suspense } from "react";
+import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { 
-  CircleChevronLeft, 
-  CircleChevronRight, 
-  X, 
-  Menu, 
-  LayoutDashboard, 
-  Theater, 
-  Building2, 
-  Tickets, 
-  Settings, 
-  Headset 
+import {
+  CircleChevronLeft,
+  CircleChevronRight,
+  X,
+  Menu,
+  LayoutDashboard,
+  Theater,
+  Building2,
+  Tickets,
+  Settings,
+  Headset
 } from "lucide-react";
 
-import { OptionTypes } from "@/app/dashboard/page";
-
-interface SidebarLayoutProps {
-  activeTab: OptionTypes;
-  children: React.ReactNode;
+export default function SidebarLayout({ children }: { children: React.ReactNode }) {
+  return <Suspense fallback={<div className="w-64 bg-zinc-900" />}>
+    <SidebarContent children={children} />
+  </Suspense>
 }
 
-export default function SidebarLayout({ activeTab, children }: SidebarLayoutProps) {
+function SidebarContent({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  console.log(pathname);
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  let activeTab = searchParams.get("tab");
+
+  if(!activeTab){
+    const pathSegments = pathname.split("/").filter(Boolean);
+    if(pathSegments[0]=="dashboard" && pathSegments.length >1){
+      activeTab = "orgs";
+    }else{
+      activeTab = "home";
+    }
+  }
 
   const menuItems = [
     { id: "home", label: "Home", icon: <LayoutDashboard size={16} /> },
@@ -41,9 +56,8 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
   return (
     <div className="flex h-screen w-full bg-white font-manrope text-black antialiased overflow-hidden">
       <aside
-        className={`relative shrink-0 border-r border-black/10 ${
-          isOpen ? "w-64" : "w-18"
-        } transition-all duration-300 hidden md:flex flex-col bg-white z-20 h-full`}
+        className={`relative shrink-0 border-r border-black/10 ${isOpen ? "w-64" : "w-18"
+          } transition-all duration-300 hidden md:flex flex-col bg-white z-20 h-full`}
       >
         <div
           onClick={() => setIsOpen(!isOpen)}
@@ -51,7 +65,7 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
         >
           {isOpen ? <CircleChevronLeft size={18} className="text-black" /> : <CircleChevronRight size={18} className="text-black" />}
         </div>
-        
+
         <div className="flex items-center px-5 py-6 border-b border-black/10">
           <div className="w-8 h-8 rounded flex items-center justify-center shrink-0">
             <img src="/logo.svg" alt="logo" className="h-full w-full" />
@@ -75,16 +89,14 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
                   backgroundColor: isActive ? '#000000' : 'transparent',
                   color: isActive ? '#ffffff' : 'rgba(0, 0, 0, 0.6)'
                 }}
-                className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${
-                  !isActive ? "hover:text-black hover:bg-black/5 transition-colors duration-100" : ""
-                }`}
+                className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${!isActive ? "hover:text-black hover:bg-black/5 transition-colors duration-100" : ""
+                  }`}
               >
-                <div 
-                  className={`absolute left-0 w-1 h-5 bg-amber-400 rounded-r transition-all duration-150 ease-out ${
-                    isActive && isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
-                  }`} 
+                <div
+                  className={`absolute left-0 w-1 h-5 bg-amber-400 rounded-r transition-all duration-150 ease-out ${isActive && isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                    }`}
                 />
-                <div 
+                <div
                   style={{ color: isActive ? '#FFD230' : undefined }}
                   className={`shrink-0 ${!isActive ? "text-black/40 group-hover:text-black transition-colors duration-100" : ""}`}
                 >
@@ -132,25 +144,22 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
 
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className={`fixed left-4 z-50 p-2.5 rounded-full bg-black text-white shadow-lg cursor-pointer transition-all duration-300 ease-in-out ${
-            isMobileOpen ? "top-4 left-52 rotate-180 bg-amber-400 text-black" : "top-20"
-          }`}
+          className={`fixed left-4 z-50 p-2.5 rounded-full bg-black text-white shadow-lg cursor-pointer transition-all duration-300 ease-in-out ${isMobileOpen ? "top-4 left-52 rotate-180 bg-amber-400 text-black" : "top-20"
+            }`}
           aria-label="Toggle Menu"
         >
           {isMobileOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
 
         <div
-          className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ease-in-out ${
-            isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-          }`}
+          className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ease-in-out ${isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
           onClick={() => setIsMobileOpen(false)}
         />
 
         <aside
-          className={`fixed top-0 left-0 z-40 w-64 h-full bg-white p-6 border-r border-black/10 shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${
-            isMobileOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed top-0 left-0 z-40 w-64 h-full bg-white p-6 border-r border-black/10 shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <div className="flex items-center pb-5 border-b border-black/10 mb-6 mt-16">
             <div className="w-6 h-6 rounded flex items-center justify-center">
@@ -174,11 +183,10 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
                     backgroundColor: isActive ? '#000000' : 'transparent',
                     color: isActive ? '#ffffff' : 'rgba(0, 0, 0, 0.6)'
                   }}
-                  className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${
-                    !isActive ? "hover:text-black hover:bg-black/4 transition-colors duration-100" : ""
-                  }`}
+                  className={`group relative flex items-center gap-3.5 px-3 py-3 rounded-xl font-semibold text-sm select-none ${!isActive ? "hover:text-black hover:bg-black/4 transition-colors duration-100" : ""
+                    }`}
                 >
-                  <div 
+                  <div
                     style={{ color: isActive ? '#FFD230' : undefined }}
                     className={`shrink-0 ${!isActive ? "text-black/40 group-hover:text-black transition-colors duration-100" : ""}`}
                   >
@@ -206,10 +214,9 @@ export default function SidebarLayout({ activeTab, children }: SidebarLayoutProp
         </aside>
       </div>
 
-      <main 
-        className={`flex-1 pt-12 pb-8 px-4 md:px-0 md:pt-0 overflow-y-auto h-full w-full z-10 bg-white transition-opacity duration-150 ${
-          isPending ? "opacity-60" : "opacity-100"
-        }`}
+      <main
+        className={`flex-1 pt-12 pb-8 px-4 md:px-0 md:pt-0 overflow-y-auto h-full w-full z-10 bg-white transition-opacity duration-150 ${isPending ? "opacity-60" : "opacity-100"
+          }`}
       >
         {children}
       </main>
