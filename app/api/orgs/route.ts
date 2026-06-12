@@ -29,8 +29,15 @@ export async function POST(req: NextRequest) {
     await prisma.organization.create({
       data: {
         name: data.name,
+        
         slug: data.slug,
         createdBy: userId,
+        Roles:{
+          create:{
+            userId,
+            role : "ADMIN"
+          }
+        }
       },
     });
     return NextResponse.json({

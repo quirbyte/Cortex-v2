@@ -27,7 +27,6 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
 function SidebarContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  console.log(pathname);
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
