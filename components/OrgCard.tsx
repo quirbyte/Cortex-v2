@@ -1,4 +1,5 @@
 "use client";
+import { formatDate } from "@/helpers/date";
 import { Trash, Calendar, Building2, SquareArrowRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -7,11 +8,7 @@ export type OrganizationCardType = { id: string; name: string; slug: string; rol
 export default function OrgCard({ id, name, slug, role, createdAt }: OrganizationCardType) {
     const router = useRouter();
 
-    const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-    });
+    const formattedDate = formatDate({ date: createdAt, option: 1 });
 
     const handleOrgDelete = async () => {
         try {
@@ -28,9 +25,9 @@ export default function OrgCard({ id, name, slug, role, createdAt }: Organizatio
     }
 
     const handleOrgEntry = async () => {
-        try{
-            router.push(`/dashboard/${slug}`);
-        }catch{
+        try {
+            router.push(`/dashboard/${slug}?tab=orgs&pane=overview`);
+        } catch {
             console.log("Unable to access Org page");
         }
     }

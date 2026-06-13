@@ -1,8 +1,11 @@
 "use client";
 import { ChevronLeft, ChevronRight, TicketCheck, TrendingUp, Calendar, Share2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { formatDate } from "@/helpers/date";
 
 export default function HomePage() {
+    const currDate = new Date().toISOString();
+    const formattedDate = formatDate({ date: currDate, option: 2 });
     const [current, setCurrent] = useState(0);
     const events = [
         {
@@ -45,7 +48,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex flex-col items-end w-full md:w-auto">
                     <h1 className="text-xl tracking-tight font-black text-black">Dashboard</h1>
-                    <p className="text-xs text-amber-600 font-mono mt-0.5">Tuesday, 9th June, 2026</p>
+                    <p className="text-xs text-amber-600 font-mono mt-0.5">{formattedDate}</p>
                 </div>
             </header>
 

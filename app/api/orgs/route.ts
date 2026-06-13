@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
-import { orgObject } from "@/validation/types";
+import { orgObject } from "@/helpers/types";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 

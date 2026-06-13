@@ -4,6 +4,7 @@ import { useState } from "react";
 import OrgCard from "./OrgCard";
 import { OrganizationType } from "@/sections/OrgPage";
 import { useRouter } from "next/navigation";
+import { formatDate } from "@/helpers/date";
 
 export default function OrgClient({ userOrgs }: { userOrgs: OrganizationType[] }) {
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -12,6 +13,8 @@ export default function OrgClient({ userOrgs }: { userOrgs: OrganizationType[] }
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const router = useRouter();
+    const currDate = new Date().toISOString();
+    const formattedDate = formatDate({ date: currDate, option: 2 });
 
     const handleDiscard = (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,7 +53,7 @@ export default function OrgClient({ userOrgs }: { userOrgs: OrganizationType[] }
             <header className="flex items-end justify-end w-full border-b border-black/5 pb-4">
                 <div className="flex flex-col items-end w-full md:w-auto">
                     <h1 className="text-xl tracking-tight font-black text-black">Organizations</h1>
-                    <p className="text-xs text-amber-600 font-mono mt-0.5">Tuesday, 9th June, 2026</p>
+                    <p className="text-xs text-amber-600 font-mono mt-0.5">{formattedDate}</p>
                 </div>
             </header>
             <h1 className="text-left text-3xl tracking-tighter font-bold py-2">My Organizations</h1>

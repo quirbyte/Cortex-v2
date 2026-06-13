@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signupObject } from "@/validation/types";
+import { signupObject } from "@/helpers/types";
 import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcrypt";
 

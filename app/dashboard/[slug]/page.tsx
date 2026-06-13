@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
+import OrgSettings from "@/components/OrgSettings";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -14,21 +15,39 @@ export default async function OrgDetailedPage({ params }: Props) {
         redirect("/signin");
     }
     const userId = (session.user as any).id;
-    const isAllowed = await prisma.userRole.findFirst({
+    const orgData = await prisma.organization.findFirst({
         where: {
-            userId,
-            org: {
-                slug
+            slug: slug,
+            Roles: {
+                some: {
+                    userId: userId, // Enforces that the user must belong to this org
+                },
+            },
+        },
+        select: {
+            id : true,
+            name: true,
+            slug: true,
+            createdAt: true,
+            Roles: {
+                where: { userId: userId },
+                select: { role: true }
             }
         }
     });
-    console.log(userId);
-    if (!isAllowed) {
+    if (!orgData) {
         return <div className="w-full h-full flex justify-center items-center">
             You are not allowed to access this page
         </div>
     }
+    const org = {
+        id : orgData.id,
+        slug : orgData.slug,
+        name : orgData.name,
+        createdAt : orgData?.createdAt.toISOString(),
+        role : orgData?.Roles[0].role
+    }
     return <div className="w-full h-full flex justify-center items-center">
-        This is {slug} page
+        <OrgSettings org={org} />
     </div>
 }

@@ -21,24 +21,24 @@ export default async function DashboardPage({ searchParams }: PageProps) {
 
   return (
     <>
-        {currentTab === "home" && <HomePage />}
-        {currentTab === "events" && (
-          <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
-            <EventPage />
-          </Suspense>
-        )}
+      {currentTab === "home" && <HomePage />}
+      {currentTab === "events" && (
+        <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
+          <EventPage />
+        </Suspense>
+      )}
 
-        {/* built-in wrapper component that lets you orchestrate loading states for your user interface */}
-        {currentTab === "orgs" && (
-          <Suspense fallback={<LoadingTabSkeleton data={"user organizations"} />}>
-            <OrgPage />
-          </Suspense>
-        )}
+      {/* built-in wrapper component that lets you orchestrate loading states for your user interface */}
+      {currentTab === "orgs" && (
+        <Suspense fallback={<LoadingTabSkeleton data={"user organizations"} />}>
+          <OrgPage />
+        </Suspense>
+      )}
 
-        {currentTab === "bookings" && <BookingsPage />}
-        {currentTab === "settings" && <SettingsPage />}
-        {currentTab === "help" && <HelpPage />}
-      
+      {currentTab === "bookings" && <BookingsPage />}
+      {currentTab === "settings" && <SettingsPage />}
+      {currentTab === "help" && <HelpPage />}
+
     </>
   );
 }

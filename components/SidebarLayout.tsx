@@ -18,13 +18,24 @@ import {
   Headset
 } from "lucide-react";
 
-export default function SidebarLayout({ children }: { children: React.ReactNode }) {
+type userType = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  emailVerified: Date | null;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export default function SidebarLayout({ children, user }: { children: React.ReactNode, user: userType }) {
   return <Suspense fallback={<div className="w-64 bg-zinc-900" />}>
-    <SidebarContent children={children} />
+    <SidebarContent children={children} user={user} />
   </Suspense>
 }
 
-function SidebarContent({ children }: { children: React.ReactNode }) {
+function SidebarContent({ children, user }: { children: React.ReactNode, user: userType }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
@@ -34,11 +45,11 @@ function SidebarContent({ children }: { children: React.ReactNode }) {
 
   let activeTab = searchParams.get("tab");
 
-  if(!activeTab){
+  if (!activeTab) {
     const pathSegments = pathname.split("/").filter(Boolean);
-    if(pathSegments[0]=="dashboard" && pathSegments.length >1){
+    if (pathSegments[0] == "dashboard" && pathSegments.length > 1) {
       activeTab = "orgs";
-    }else{
+    } else {
       activeTab = "home";
     }
   }
@@ -110,9 +121,9 @@ function SidebarContent({ children }: { children: React.ReactNode }) {
         <div className="p-4 border-t border-black/10 flex flex-col gap-3">
           {isOpen && (
             <div className="flex items-center gap-3 px-2">
-              <div className="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center font-bold text-xs text-black border border-black/5">S</div>
+              <div className="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center font-bold text-xs text-black border border-black/5">{user.name?.[0] || ""}</div>
               <div className="truncate">
-                <p className="text-xs font-bold text-black leading-none">Soumyadip</p>
+                <p className="text-xs font-bold text-black leading-none">{user?.name}</p>
                 <p className="text-[10px] text-black/40 font-mono mt-0.5">v1.0.0 • Prod</p>
               </div>
             </div>

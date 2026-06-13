@@ -18,37 +18,34 @@ export default async function OrgPage() {
     redirect("/signin");
   }
   const userId = (session.user as any).id;
-  const userOrgs = await prisma.organization.findMany({
+
+  const userRoles = await prisma.userRole.findMany({
     where: {
-      createdBy: userId
+      userId: userId,
     },
     select: {
-      id: true,
-      name: true,
-      slug: true,
-      createdAt: true,
-      Roles: {
-        where: {
-          userId
-        },
+      role: true,
+      org: {
         select: {
-          role: true
-        }
-      }
+          id: true,
+          name: true,
+          slug: true,
+          createdAt: true,
+        },
+      },
     },
     orderBy: {
-      createdAt: "desc"
-    }
+      createdAt: "desc",
+    },
   }) || [];
 
-  const flattendOrgs: OrganizationType[] = userOrgs.map((org) => ({
-    id: org.id,
-    name: org.name,
-    slug: org.slug,
-    createdAt: org.createdAt.toISOString(), 
-    role: org.Roles[0]?.role || "ADMIN", 
+  const flattenedOrgs: OrganizationType[] = userRoles.map((record) => ({
+    id: record.org.id,
+    name: record.org.name,
+    slug: record.org.slug,
+    createdAt: record.org.createdAt.toISOString(),
+    role: record.role as "ADMIN" | "MODERATOR" | "VOLUNTEER",
   }));
 
-
-  return <OrgClient userOrgs={flattendOrgs} />;
+  return <OrgClient userOrgs={flattenedOrgs} />;
 }
