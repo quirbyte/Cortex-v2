@@ -7,6 +7,7 @@ import MembersPaneClient from "./MembersPaneClient";
 
 export type MemberType = {
     id: string;
+    userId: string;
     name: string;
     email: string | null;
     role: "ADMIN" | "MODERATOR" | "VOLUNTEER";
@@ -45,6 +46,7 @@ export default async function MembersPane({ org }: { org: orgType }) {
 
     const members: MemberType[] = dbRoles.map((record) => ({
         id: record.id,
+        userId: record.user.id,
         name: record.user.name || "Anonymous Member",
         email: record.user.email,
         role: record.role as "ADMIN" | "MODERATOR" | "VOLUNTEER",
@@ -56,5 +58,5 @@ export default async function MembersPane({ org }: { org: orgType }) {
     const moderators = members.filter(m => m.role === "MODERATOR");
     const volunteers = members.filter(m => m.role === "VOLUNTEER");
 
-    return <MembersPaneClient org={org} admins={admins} moderators={moderators} volunteers={volunteers} userId={userId} />
+    return <MembersPaneClient org={org} admins={admins} moderators={moderators} volunteers={volunteers} userRole={org.role} />
 }

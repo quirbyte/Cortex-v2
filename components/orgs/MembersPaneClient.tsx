@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 
 export default function MembersPaneClient({
     org,
-    userId,
+    userRole,
     admins,
     moderators,
     volunteers
-}: { org: orgType, admins: MemberType[], moderators: MemberType[], volunteers: MemberType[], userId: string }) {
+}: { org: orgType, admins: MemberType[], moderators: MemberType[], volunteers: MemberType[], userRole: string }) {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
@@ -79,7 +79,7 @@ export default function MembersPaneClient({
                                 </h3>
                             </div>
                             <div className="grid grid-cols-1 gap-2 w-full">
-                                {admins.map(member => <MemberCard key={member.id} member={member} owner={userId} orgId={org.id} />)}
+                                {admins.map(member => <MemberCard key={member.id} member={member} orgId={org.id} currRole={userRole} />)}
                             </div>
                         </div>
                     )}
@@ -92,7 +92,7 @@ export default function MembersPaneClient({
                                 </h3>
                             </div>
                             <div className="grid grid-cols-1 gap-2 w-full">
-                                {moderators.map(member => <MemberCard key={member.id} member={member} owner={userId} orgId={org.id} />)}
+                                {moderators.map(member => <MemberCard key={member.id} member={member} orgId={org.id} currRole={userRole} />)}
                             </div>
                         </div>
                     )}
@@ -105,7 +105,7 @@ export default function MembersPaneClient({
                                 </h3>
                             </div>
                             <div className="grid grid-cols-1 gap-2 w-full">
-                                {volunteers.map(member => <MemberCard key={member.id} member={member} owner={userId} orgId={org.id} />)}
+                                {volunteers.map(member => <MemberCard key={member.id} member={member} orgId={org.id} currRole={userRole} />)}
                             </div>
                         </div>
                     )}

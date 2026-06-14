@@ -3,7 +3,7 @@ import { formatDate } from "@/helpers/date";
 import { ShieldCheck, Mail, UserMinus, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function MemberCard({ member, owner, orgId }: { member: MemberType; owner: string; orgId: string }) {
+export default function MemberCard({ member, orgId, currRole }: { member: MemberType; orgId: string; currRole: string }) {
     const router = useRouter();
     const handleDelete = async () => {
         try {
@@ -33,13 +33,13 @@ export default function MemberCard({ member, owner, orgId }: { member: MemberTyp
                     <h4 className="font-bold text-xs sm:text-base tracking-tight text-zinc-900 group-hover:text-black transition-colors truncate">
                         {member.name}
                     </h4>
-                    {member.role === "ADMIN" && member.creator === owner && (
+                    {member.role === "ADMIN" && member.creator === member.userId && (
                         <span className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 py-0.5 rounded-md sm:rounded-lg text-[8px] sm:text-[10px] font-bold tracking-wider font-mono uppercase border bg-amber-50 text-amber-700 border-amber-200/50">
                             <ShieldCheck size={8} className="sm:w-2.5 sm:h-2.5" />
                             Owner
                         </span>
                     )}
-                    {member.role === "ADMIN" && member.creator !== owner && (
+                    {member.role === "ADMIN" && member.creator !== member.userId && (
                         <span className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 py-0.5 rounded-md sm:rounded-lg text-[8px] sm:text-[10px] font-bold tracking-wider font-mono uppercase border bg-zinc-900 text-white border-zinc-950">
                             <Shield size={8} className="sm:w-2.5 sm:h-2.5" />
                             Admin
@@ -61,7 +61,7 @@ export default function MemberCard({ member, owner, orgId }: { member: MemberTyp
                 </span>
             </div>
 
-            {member.creator === owner ? (
+            {currRole === "ADMIN" && member.creator !== member.userId ? (
                 <button onClick={handleDelete}
                     aria-label="Revoke permissions"
                     className="flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-lg sm:rounded-xl text-zinc-400 border border-transparent hover:text-red-600 hover:bg-red-50 hover:border-red-100 transition duration-150 active:scale-95"
