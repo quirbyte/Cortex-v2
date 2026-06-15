@@ -92,8 +92,9 @@ First 30 mins — plan exactly what you're building today, no surprises
 Next 2 hrs — build, no AI writing code, Google only when stuck
 Last 30 mins — test what you built, fix obvious bugs, commit to GitHub
 
-------------------------:BUGS:-----------------------
+------------------------:BUGS & FUTURE Features:-----------------------
 
 1. BFCache (Back-Forward Cache) on page back swipe
 2. Error correct description auth forms
 3. cloudinary image delete on event deletion
+4. alert system with custom alert popups for every alert
