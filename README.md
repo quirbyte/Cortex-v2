@@ -96,3 +96,4 @@ Last 30 mins — test what you built, fix obvious bugs, commit to GitHub
 
 1. BFCache (Back-Forward Cache) on page back swipe
 2. Error correct description auth forms
+3. cloudinary image delete on event deletion
