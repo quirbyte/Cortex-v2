@@ -42,12 +42,12 @@ export default function OrgCard({ id, name, slug, role, createdAt }: Organizatio
                     <Building2 size={22} strokeWidth={2} />
                 </div>
 
-                <button onClick={handleOrgDelete}
+                {role === "ADMIN" && <button onClick={handleOrgDelete}
                     className="p-2 text-zinc-400 hover:text-red-600 rounded-lg hover:bg-red-50 border border-transparent hover:border-red-100 transition-all duration-200"
                     aria-label="Delete organization"
                 >
                     <Trash size={18} strokeWidth={2} />
-                </button>
+                </button>}
             </div>
 
             <div className="z-10 mt-auto w-full">

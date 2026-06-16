@@ -22,7 +22,7 @@ export const eventObject = z.object({
   tags: z.array(z.string()),
   imageFile: z
     .instanceof(File)
-    .nullable()
+    .nullish()
     .refine((file) => !file || file.size <= 2 * 1024 * 1024, {
       message: "Max file size is 2MB",
     })

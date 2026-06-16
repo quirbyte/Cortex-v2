@@ -89,18 +89,20 @@ export default function EditEventSidebar({ isOpen, onClose, event }: EditSidebar
         body: formData,
       });
 
+      const data = await res.json();
+
       if (res.ok) {
+        alert(data.msg || "Updated successfully!");
         router.refresh();
         handleCloseAndClear();
       } else if (res.status === 413) {
-        const data = await res.json();
         alert(data.error || "The image file you attached is too heavy.");
-        return;
       } else {
-        alert("Failed to update event");
+        alert(data.error || data.msg || "An unexpected error occurred.");
       }
     } catch (error) {
       console.error("Update error:", error);
+      alert("Network communication failure.");
     } finally {
       setLoading(false);
     }

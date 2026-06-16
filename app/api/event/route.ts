@@ -125,28 +125,25 @@ export async function PUT(req: NextRequest) {
     }
 
     const rawImageFile = formData.get("imageFile");
-    
-    if (rawImageFile && typeof rawImageFile !== "string" && "size" in rawImageFile) {
-      if (rawImageFile.size > 2 * 1024 * 1024) {
-        return NextResponse.json(
-          { error: "Image size exceeds the 2MB limit" },
-          { status: 413 }
-        );
-      }
-    }
 
-    const hasValidNewImage = rawImageFile && 
-                             typeof rawImageFile !== "string" && 
-                             "size" in rawImageFile && 
-                             rawImageFile.size > 0;
+    const hasValidNewImage =
+      rawImageFile &&
+      typeof rawImageFile !== "string" &&
+      "size" in rawImageFile &&
+      rawImageFile.size > 0;
 
     const rawData = {
       name: formData.get("name") || existingEvent.name,
       desc: formData.get("desc") ?? existingEvent.desc,
       venue: formData.get("venue") || existingEvent.venue,
-      startsAt: formData.get("startsAt") || existingEvent.startsAt.toISOString(),
-      price: formData.has("price") ? Number(formData.get("price")) : existingEvent.price,
-      capacity: formData.has("capacity") ? Number(formData.get("capacity")) : existingEvent.capacity,
+      startsAt:
+        formData.get("startsAt") || existingEvent.startsAt.toISOString(),
+      price: formData.has("price")
+        ? Number(formData.get("price"))
+        : existingEvent.price,
+      capacity: formData.has("capacity")
+        ? Number(formData.get("capacity"))
+        : existingEvent.capacity,
       orgId: formData.get("orgId") || existingEvent.orgId,
       tags: parsedTags,
       imageFile: hasValidNewImage ? rawImageFile : undefined,
@@ -154,13 +151,21 @@ export async function PUT(req: NextRequest) {
 
     const validation = eventObject.safeParse(rawData);
     if (!validation.success) {
+      const flattenedErrors = validation.error.flatten();
+      const errorMessages = Object.entries(flattenedErrors.fieldErrors).map(
+        ([field, msgs]) => `${field}: ${msgs?.join(", ")}`,
+      );
+      if (flattenedErrors.formErrors.length > 0) {
+        errorMessages.push(...flattenedErrors.formErrors);
+      }
       return NextResponse.json(
-        { error: validation.error.format() },
+        { error: errorMessages.join(" | ") },
         { status: 400 },
       );
     }
 
-    const { name, desc, venue, startsAt, price, capacity, tags, imageFile } = validation.data;
+    const { name, desc, venue, startsAt, price, capacity, tags, imageFile } =
+      validation.data;
 
     let finalImageUrl = existingEvent.image;
 
@@ -188,7 +193,8 @@ export async function PUT(req: NextRequest) {
             .upload_stream(
               { folder: "organization_events", resource_type: "image" },
               (error, result) => {
-                if (error || !result) return reject(error || new Error("Cloudinary error"));
+                if (error || !result)
+                  return reject(error || new Error("Cloudinary error"));
                 resolve(result);
               },
             )
