@@ -90,3 +90,55 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const data = await req.json();
+    const { orgId, id } = data;
+
+    if (!orgId || !id) {
+      return NextResponse.json(
+        { msg: "Missing credentials" },
+        { status: 400 },
+      );
+    }
+
+    const organization = await prisma.organization.findUnique({
+      where: { id: orgId },
+      select: { createdBy: true },
+    });
+
+    if (!organization) {
+      return NextResponse.json(
+        { msg: "Organization not found" },
+        { status: 404 },
+      );
+    }
+
+    if (organization.createdBy === id) {
+      return NextResponse.json(
+        { 
+          msg: "The creator cannot leave the organization. You must delete the entire organization instead." 
+        },
+        { status: 403 },
+      );
+    }
+    await prisma.userRole.deleteMany({
+      where: {
+        orgId,
+        userId: id,
+      },
+    });
+
+    return NextResponse.json({
+      msg: "Left Group successfully",
+    });
+
+  } catch (error: any) {
+    console.error("Leave group execution error:", error);
+    return NextResponse.json(
+      { msg: "Internal server error" }, 
+      { status: 500 }
+    );
+  }
+}

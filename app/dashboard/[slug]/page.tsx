@@ -48,6 +48,6 @@ export default async function OrgDetailedPage({ params }: Props) {
         role : orgData?.Roles[0].role
     }
     return <div className="w-full h-full flex justify-center items-center">
-        <OrgSettings org={org} />
+        <OrgSettings org={org} userId={userId} />
     </div>
 }

@@ -13,7 +13,7 @@ export type orgType = {
     role: string;
 }
 
-export default async function OrgSettings({ org }: { org: orgType }) {
+export default async function OrgSettings({ org, userId }: { org: orgType; userId: string }) {
     return (
         <Suspense fallback={<div className="p-4 font-mono text-xs text-zinc-400">Loading layout matrices...</div>}>
             <OrgSettingsClient
@@ -21,7 +21,7 @@ export default async function OrgSettings({ org }: { org: orgType }) {
                 overviewSlot={<OverviewPane org={org} />}
                 membersSlot={<MembersPane org={org} />}
                 eventsSlot={<OrgEventsPane org={org} />}
-                settingsSlot={<OrgSettingsPane org={org} />}
+                settingsSlot={<OrgSettingsPane org={org} userId={userId} />}
             />
         </Suspense>
     );
