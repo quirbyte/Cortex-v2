@@ -38,6 +38,9 @@ export default async function EventsPage() {
                     name: true
                 }
             }
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     }) || [];
 
@@ -70,7 +73,7 @@ export default async function EventsPage() {
             </div>
             <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-10">
                 {
-                    events.map((event)=> (
+                    events.map((event) => (
                         <EventCard key={event.id} event={event} />
                     ))
                 }

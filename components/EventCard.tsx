@@ -1,7 +1,35 @@
+"use client";
 import { EventType } from "@/sections/EventsPage";
 import { MapPin, Clock, Users, Tag, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function EventCard({ event }: { event: EventType }) {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const handleBookEvent = async () => {
+        if (event.sold >= event.capacity) {
+            alert("Capacity filled! No more seats left..");
+            return;
+        }
+        try {
+            setLoading(true);
+            const res = await fetch(`/api/booking`, {
+                method: "POST",
+                body: JSON.stringify({
+                    eventId: event.id
+                })
+            });
+            if (res.ok) {
+                router.refresh();
+            }
+        } catch (err: any) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <div className="group relative flex flex-col w-full rounded-2xl border border-zinc-200/80 bg-white overflow-hidden transition-all duration-300 hover:shadow-md hover:border-zinc-300">
             <div className="relative w-full aspect-16/7 bg-zinc-100 overflow-hidden border-b border-zinc-100">
@@ -66,7 +94,7 @@ export default function EventCard({ event }: { event: EventType }) {
                         </p>
                         <div className="text-right font-mono shrink-0">
                             <span className="text-base font-black text-zinc-900 leading-none tracking-tight">
-                                ₹{event.price}
+                                {event.price !== 0 ? `₹${event.price}` : "FREE"}
                             </span>
                         </div>
                     </div>
@@ -86,7 +114,7 @@ export default function EventCard({ event }: { event: EventType }) {
                         </div>
 
                         <div className="shrink-0">
-                            <button className="bg-zinc-950 text-white text-xs font-bold py-2 px-3.5 rounded-xl shadow-xs hover:bg-zinc-800 active:scale-[0.98] transition-all whitespace-nowrap flex items-center gap-1">
+                            <button disabled={loading} onClick={handleBookEvent} className="bg-zinc-950 text-white text-xs font-bold py-2 px-3.5 rounded-xl shadow-xs hover:bg-zinc-800 active:scale-[0.98] transition-all whitespace-nowrap flex items-center gap-1 disabled:opacity-50">
                                 Book Now
                                 <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
                             </button>

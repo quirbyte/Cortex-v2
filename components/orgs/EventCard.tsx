@@ -111,7 +111,7 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         <div className="text-right shrink-0 font-mono pl-3">
                             <span className="text-xs text-zinc-400 font-bold block leading-none uppercase text-[8px] tracking-wider mb-0.5">Price</span>
                             <span className="text-base sm:text-lg font-black text-black leading-none tracking-tight">
-                                ₹{event.price}
+                                {event.price!==0?`₹${event.price}` : "FREE" }
                             </span>
                         </div>
                     </div>
