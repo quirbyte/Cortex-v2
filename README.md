@@ -1,3 +1,8 @@
+Today's goals:---
+
+1. Org Settings Page
+2. Events Booking Page
+3. Booked Events Page
 
 ----------------------:JOURNEY:----------------------
 The 10 Day Cortex MVP Todo:
