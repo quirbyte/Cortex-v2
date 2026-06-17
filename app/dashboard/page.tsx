@@ -35,7 +35,13 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         </Suspense>
       )}
 
-      {currentTab === "bookings" && <BookingsPage />}
+      {
+        currentTab === "bookings" && (
+          <Suspense fallback={<LoadingTabSkeleton data={"user bookings"} />}>
+            <BookingsPage />
+          </Suspense>
+        )
+      }
       {currentTab === "settings" && <SettingsPage />}
       {currentTab === "help" && <HelpPage />}
 
