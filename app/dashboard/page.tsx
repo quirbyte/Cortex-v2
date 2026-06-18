@@ -27,14 +27,11 @@ export default async function DashboardPage({ searchParams }: PageProps) {
           <EventPage />
         </Suspense>
       )}
-
-      {/* built-in wrapper component that lets you orchestrate loading states for your user interface */}
       {currentTab === "orgs" && (
         <Suspense fallback={<LoadingTabSkeleton data={"user organizations"} />}>
           <OrgPage />
         </Suspense>
       )}
-
       {
         currentTab === "bookings" && (
           <Suspense fallback={<LoadingTabSkeleton data={"user bookings"} />}>
@@ -42,7 +39,13 @@ export default async function DashboardPage({ searchParams }: PageProps) {
           </Suspense>
         )
       }
-      {currentTab === "settings" && <SettingsPage />}
+      {
+        currentTab === "settings" && (
+          <Suspense fallback={<LoadingTabSkeleton data={"user settings"} />}>
+            <SettingsPage />
+          </Suspense>
+        )
+      }
       {currentTab === "help" && <HelpPage />}
 
     </>

@@ -9,6 +9,7 @@ export type MemberType = {
     id: string;
     userId: string;
     name: string;
+    image : string | null;
     email: string | null;
     role: "ADMIN" | "MODERATOR" | "VOLUNTEER";
     joinedAt: string;
@@ -31,6 +32,7 @@ export default async function MembersPane({ org }: { org: orgType }) {
                     id: true,
                     name: true,
                     email: true,
+                    image: true
                 },
             },
             org: {
@@ -47,6 +49,7 @@ export default async function MembersPane({ org }: { org: orgType }) {
     const members: MemberType[] = dbRoles.map((record) => ({
         id: record.id,
         userId: record.user.id,
+        image: record.user.image,
         name: record.user.name || "Anonymous Member",
         email: record.user.email,
         role: record.role as "ADMIN" | "MODERATOR" | "VOLUNTEER",

@@ -25,8 +25,17 @@ export default function MemberCard({ member, orgId, currRole }: { member: Member
     return <div className="group relative flex items-center justify-between w-full rounded-xl sm:rounded-2xl border border-zinc-200/80 bg-white p-2.5 sm:p-4 transition-all duration-300 hover:shadow-sm hover:border-zinc-300 overflow-hidden">
         <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-zinc-50 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:bg-zinc-100/60 z-0" />
         <div className="flex items-center gap-2 sm:gap-3.5 z-10 min-w-0 flex-1">
-            <div className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-zinc-100 text-zinc-800 font-black text-xs sm:text-sm border border-zinc-200/50 uppercase font-mono tracking-tight select-none">
-                {member.name.substring(0, 2)}
+            <div className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-zinc-100 text-zinc-800 font-black text-xs sm:text-sm border border-zinc-200/50 uppercase font-mono tracking-tight select-none overflow-hidden">
+                {member.image ? (
+                    <img
+                        src={member.image}
+                        alt={member.name || "User Avatar"}
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover"
+                    />
+                ) : (
+                    member.name.substring(0, 2)
+                )}
             </div>
             <div className="min-w-0 pr-2">
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">

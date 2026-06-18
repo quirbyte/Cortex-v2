@@ -121,7 +121,12 @@ function SidebarContent({ children, user }: { children: React.ReactNode, user: u
         <div className="p-4 border-t border-black/10 flex flex-col gap-3">
           {isOpen && (
             <div className="flex items-center gap-3 px-2">
-              <div className="w-7 h-7 bg-amber-400 rounded-full flex items-center justify-center font-bold text-xs text-black border border-black/5">{user.name?.[0] || ""}</div>
+              <div className="w-7 h-7 border border-black/5 rounded-full overflow-hidden">{
+                user.image ? <img src={user.image} alt={user.name || "User Avatar"}
+                  referrerPolicy="no-referrer" className="h-full w-full object-contain rounded-full" /> : <div className="w-full h-full bg-amber-400 flex items-center justify-center font-bold text-xs text-black">
+                  {user.name ? user.name[0] : ""}
+                </div>
+              }</div>
               <div className="truncate">
                 <p className="text-xs font-bold text-black leading-none">{user?.name}</p>
                 <p className="text-[10px] text-black/40 font-mono mt-0.5">v1.0.0 • Prod</p>
