@@ -1,3 +1,4 @@
+import cloudinary from "@/app/lib/cloudinary";
 import { prisma } from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,7 +39,9 @@ export async function PUT(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
-    let { image, id } = await req.json();
+    const formData = await req.formData();
+    const id = formData.get("id") as string;
+    const imagePayload = formData.get("image");
     if (!id) {
       return NextResponse.json(
         {
@@ -47,20 +50,42 @@ export async function PATCH(req: NextRequest) {
         { status: 404 },
       );
     }
+    let finalImage: string | null | undefined = undefined;
+    if (imagePayload === "delete") {
+      finalImage = null;
+    } else if (imagePayload && typeof imagePayload !== "string") {
+      const file = imagePayload as File;
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const uploadResult = await new Promise<any>((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "user_avatars",
+            allowed_formats: ["jpg", "webp", "jpeg", "png"],
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          },
+        );
+        uploadStream.end(buffer);
+      });
+      finalImage = uploadResult.secure_url;
+    }
 
-    if (!image) image = null;
-
-    await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        image,
-      },
-    });
+    if (finalImage !== undefined) {
+      await prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          image: finalImage,
+        },
+      });
+    }
 
     return NextResponse.json({
-      msg: "Image updated successfully",
+      msg: "Avatar successfully updated",
     });
   } catch (err: any) {
     console.log(err);

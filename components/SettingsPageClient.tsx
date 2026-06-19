@@ -57,36 +57,44 @@ export default function SettingPageClient({ user }: { user: UserSettingsType }) 
                     <p className="text-xs text-amber-600 font-mono mt-0.5">{formattedDate}</p>
                 </div>
             </header>
-            <div className="flex flex-col gap-3 mt-5">
-                <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
-                    <div className="flex flex-col gap-0">
-                        <p className="font-semibold text-sm md:text-lg tracking-tight">Name Settings</p>
-                        <p className="font-light text-[10px] md:text-sm text-zinc-500">Update your name according to your preference</p>
+            <div className="mt-5 flex flex-col gap-2">
+                <p className="text-zinc-500 font-bold uppercase text-[10px] md:text-xs tracking-wider">User Settings</p>
+                <div className="flex flex-col gap-3">
+                    <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
+                        <div className="flex flex-col gap-0">
+                            <p className="font-semibold text-sm md:text-lg tracking-tight">Name Settings</p>
+                            <p className="font-light text-[10px] md:text-sm text-zinc-500">Update your name according to your preference</p>
+                        </div>
+                        <button onClick={() => setIsNamePopup(true)} className="h-10 w-10 rounded-full flex justify-center items-center hover:shadow-sm active:scale-95">
+                            <ArrowRight color="grey" size={20} />
+                        </button>
                     </div>
-                    <button onClick={() => setIsNamePopup(true)} className="h-10 w-10 rounded-full flex justify-center items-center hover:shadow-sm active:scale-95">
-                        <ArrowRight color="grey" size={20} />
-                    </button>
+                    <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
+                        <div className="flex flex-col gap-0">
+                            <p className="font-semibold text-sm md:text-lg tracking-tight">Profile Picture Settings</p>
+                            <p className="font-light text-[10px] md:text-sm text-zinc-500">Update your pic according to your preference</p>
+                        </div>
+                        <button onClick={() => setIsImagePopup(true)} className="h-10 w-10 rounded-full flex justify-center items-center hover:shadow-sm active:scale-95">
+                            <ArrowRight color="grey" size={20} />
+                        </button>
+                    </div>
                 </div>
-                <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
-                    <div className="flex flex-col gap-0">
-                        <p className="font-semibold text-sm md:text-lg tracking-tight">Profile Picture Settings</p>
-                        <p className="font-light text-[10px] md:text-sm text-zinc-500">Update your pic according to your preference</p>
+            </div>
+            <div className="mt-5 flex flex-col gap-2">
+                <p className="text-zinc-500 font-bold uppercase text-[10px] md:text-xs tracking-wider">System Settings</p>
+                <div className="flex flex-col gap-3">
+                    <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
+                        <div className="flex flex-col gap-0">
+                            <p className="font-semibold text-sm md:text-lg tracking-tight">Mode Settings</p>
+                            <p className="font-light text-[10px] md:text-sm text-zinc-500">Select mode according to your preference</p>
+                        </div>
+                        <button
+                            onClick={mode === "light" ? () => toggleMode("dark") : () => toggleMode("light")}
+                            className={`relative h-6 w-12 rounded-full flex items-center p-0.5 transition-colors duration-300 ${mode === "dark" ? 'bg-zinc-200' : 'bg-zinc-500'}`}
+                        >
+                            <div className={`h-5 w-5 rounded-full transition-all duration-300 transform ${mode === "dark" ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white'}`} />
+                        </button>
                     </div>
-                    <button onClick={() => setIsImagePopup(true)} className="h-10 w-10 rounded-full flex justify-center items-center hover:shadow-sm active:scale-95">
-                        <ArrowRight color="grey" size={20} />
-                    </button>
-                </div>
-                <div className="w-full bg-white border border-zinc-200 p-3 hover:shadow-sm rounded-xl flex justify-between items-center">
-                    <div className="flex flex-col gap-0">
-                        <p className="font-semibold text-sm md:text-lg tracking-tight">Mode Settings</p>
-                        <p className="font-light text-[10px] md:text-sm text-zinc-500">Select mode according to your preference</p>
-                    </div>
-                    <button
-                        onClick={mode === "light" ? () => toggleMode("dark") : () => toggleMode("light")}
-                        className={`relative h-6 w-12 rounded-full flex items-center p-0.5 transition-colors duration-300 ${mode === "dark" ? 'bg-zinc-200' : 'bg-zinc-500'}`}
-                    >
-                        <div className={`h-5 w-5 rounded-full transition-all duration-300 transform ${mode === "dark" ? 'translate-x-6 bg-black' : 'translate-x-0 bg-white'}`} />
-                    </button>
                 </div>
             </div>
         </div>
@@ -110,7 +118,7 @@ export default function SettingPageClient({ user }: { user: UserSettingsType }) 
                     </div>
                 </div>
             </div>
-        }{
+        } {
             isImagePopup && <ImagePopup loading={loading} setLoading={setLoading} setIsImagePopup={setIsImagePopup} user={user} />
         }
     </>

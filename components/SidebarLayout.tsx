@@ -123,7 +123,7 @@ function SidebarContent({ children, user }: { children: React.ReactNode, user: u
             <div className="flex items-center gap-3 px-2">
               <div className="w-7 h-7 border border-black/5 rounded-full overflow-hidden">{
                 user.image ? <img src={user.image} alt={user.name || "User Avatar"}
-                  referrerPolicy="no-referrer" className="h-full w-full object-contain rounded-full" /> : <div className="w-full h-full bg-amber-400 flex items-center justify-center font-bold text-xs text-black">
+                  referrerPolicy="no-referrer" className="h-full w-full object-cover rounded-full" /> : <div className="w-full h-full bg-amber-400 flex items-center justify-center font-bold text-xs text-black">
                   {user.name ? user.name[0] : ""}
                 </div>
               }</div>

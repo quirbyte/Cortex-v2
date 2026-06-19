@@ -20,44 +20,27 @@ export default function ImagePopup({
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
-    const handleRemovePhoto = async () => {
-        setLoading(true);
-        try {
-            const res = await fetch(`/api/user`, {
-                method: "POST",
-                body: JSON.stringify({
-                    id: user.id,
-                    image: null
-                })
-            });
-            if (res.ok) {
-                router.refresh();
-                setIsImagePopup(false);
-            }else{
-                console.log("Cannot update image")
-            }
-        } catch (err: any) {
-            console.log(err);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const handleUpdatePhoto = async (file: File) => {
-        setLoading(true);
-        try {
-
-        } catch (err: any) {
-            console.log(err);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     const handleConfirmPhoto = async () => {
         setLoading(true);
         try {
-
+            const formData = new FormData();
+            formData.append("id",user.id);
+            if(!imageUrl){
+                formData.append("image","delete");
+            }else if(imageFile){
+                formData.append("image",imageFile);
+            }else{
+                setIsImagePopup(false);
+                return;
+            }
+            const res = await fetch(`api/user`,{
+                method : "PATCH",
+                body: formData
+            });
+            if(res.ok){
+                router.refresh();
+                setIsImagePopup(false);
+            }
         } catch (err: any) {
             console.log(err);
         } finally {
@@ -115,7 +98,7 @@ export default function ImagePopup({
                     <div className="h-full w-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center select-none">
                         {imageUrl ? (
                             <img
-                                src={imageUrl} // Changed from user.image to local state imageUrl
+                                src={imageUrl}
                                 alt={user.name || "User Avatar"}
                                 referrerPolicy="no-referrer"
                                 className="h-full w-full object-cover rounded-full"
@@ -143,7 +126,6 @@ export default function ImagePopup({
                         <button
                             type="button"
                             onClick={() => {
-                                handleRemovePhoto();
                                 setImageUrl(null);
                                 setImageFile(null);
                             }}
@@ -157,12 +139,7 @@ export default function ImagePopup({
 
                     <button
                         type="button"
-                        onClick={() => {
-                            if (imageFile) {
-                                handleUpdatePhoto(imageFile);
-                            }
-                            handleConfirmPhoto();
-                        }}
+                        onClick={() => handleConfirmPhoto()}
                         disabled={loading}
                         className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.99] disabled:opacity-50"
                     >
