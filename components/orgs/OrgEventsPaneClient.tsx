@@ -141,10 +141,10 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                 <div
                     className={`absolute inset-0 bg-black/10 backdrop-blur-sm transition-opacity duration-300 ${isFormOpen ? "opacity-100" : "opacity-0"}`}
                 />
-                <div className={`absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl border-l border-zinc-200/80 flex flex-col transition-transform duration-300 ease-in-out transform ${isFormOpen ? "translate-x-0" : "translate-x-full"}`}>
-                    <div className="p-4 border-b border-zinc-100 flex items-center justify-between">
+                <div className={`absolute inset-y-0 right-0 max-w-md w-full bg-white dark:bg-black dark:border-zinc-800 shadow-2xl border-l border-zinc-200/80 flex flex-col transition-transform duration-300 ease-in-out transform ${isFormOpen ? "translate-x-0" : "translate-x-full"}`}>
+                    <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
                         <div>
-                            <h3 className="text-sm sm:text-base font-bold text-zinc-900 tracking-tight flex items-center gap-1.5">
+                            <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white tracking-tight flex items-center gap-1.5">
                                 <Plus size={15} strokeWidth={2.5} />
                                 Create New Event
                             </h3>
@@ -166,7 +166,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="e.g., Tech Synergy Summit"
-                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium"
+                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                             />
                         </div>
                         <div className="space-y-1">
@@ -176,7 +176,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                 value={desc}
                                 onChange={(e) => setDesc(e.target.value)}
                                 placeholder="Brief breakdown summary about schedules, nodes, or targets..."
-                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium resize-none"
+                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium resize-none dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                             />
                         </div>
                         <div className="space-y-1">
@@ -186,7 +186,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                 value={venue}
                                 onChange={(e) => setVenue(e.target.value)}
                                 placeholder="e.g., Convention Hall B, Salt Lake"
-                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium"
+                                className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-medium dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                             />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
@@ -196,7 +196,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                     type="datetime-local"
                                     value={dateTime}
                                     onChange={(e) => setDateTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 transition text-zinc-600 font-mono"
+                                    className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 transition text-zinc-600 font-mono dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -206,7 +206,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                     value={capacity}
                                     onChange={(e) => setCapacity(e.target.value)}
                                     placeholder="e.g., 200"
-                                    className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-mono"
+                                    className="w-full px-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-mono dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                                 />
                             </div>
                         </div>
@@ -219,13 +219,13 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                     placeholder="0 (Leaves ticket free)"
-                                    className="w-full pl-6 pr-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-mono"
+                                    className="w-full pl-6 pr-3 py-2 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300 transition text-zinc-800 font-mono dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                                 />
                             </div>
                         </div>
                         <div className="space-y-1.5">
                             <label className="font-bold text-zinc-700 tracking-tight block">Category Tags</label>
-                            <div className="w-full px-3 py-1.5 border border-zinc-200 rounded-xl focus-within:border-zinc-400 transition flex flex-wrap gap-1.5 items-center bg-white min-h-9.5">
+                            <div className="w-full px-3 py-1.5 border border-zinc-200 rounded-xl focus-within:border-zinc-400 transition flex flex-wrap gap-1.5 items-center bg-white min-h-9.5  dark:bg-zinc-950 dark:border-zinc-800">
                                 {
                                     tags.map((tag) => (
                                         <span key={tag} className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-md text-[10px] font-bold font-mono bg-zinc-100 text-zinc-600 border border-zinc-200/40">
@@ -242,13 +242,13 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                     onChange={(e) => setTagInput(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                     placeholder="Type tag & press Enter"
-                                    className="flex-1 min-w-15 bg-transparent outline-none text-zinc-800 font-medium placeholder:text-zinc-300 py-0.5"
+                                    className="flex-1 min-w-15 bg-transparent outline-none text-zinc-800 font-medium placeholder:text-zinc-300 py-0.5 dark:border-zinc-800 dark:placeholder:text-zinc-600 dark:text-zinc-400"
                                 />
                             </div>
                         </div>
                         <div className="space-y-1">
                             <label className="font-bold text-zinc-700 tracking-tight block">Cover Image</label>
-                            <label className="w-full p-4 border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-zinc-50 hover:border-zinc-300 transition group relative min-h-27.5">
+                            <label className="w-full p-4 border border-dashed border-zinc-200 rounded-xl bg-zinc-50/50 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-zinc-50 hover:border-zinc-300 transition group relative min-h-27.5 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-900 dark:hover:border-zinc-800">
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -259,7 +259,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                                 {imageUrl ? (
                                     <div className="w-full aspect-16/7 rounded-lg overflow-hidden relative">
                                         <img src={imageUrl} alt="Uploaded Banner" className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition text-white text-[10px] font-bold">
+                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition text-white text-[10px] font-bold dark:text-zinc-900">
                                             Change Thumbnail Image
                                         </div>
                                     </div>
@@ -275,18 +275,18 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                             </label>
                         </div>
                     </div>
-                    <div className="p-4 border-t border-zinc-100 bg-zinc-50/40 grid grid-cols-2 gap-2.5">
+                    <div className="p-4 border-t border-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 bg-zinc-50/40 grid grid-cols-2 gap-2.5">
                         <button
-                            type="button" // FIX 3: Explicit type configuration prevents un-intended submissions
+                            type="button"
                             onClick={() => { setIsFormOpen(false); resetForm(); }}
-                            className="w-full py-2.5 rounded-xl border border-zinc-200 text-zinc-700 font-bold hover:bg-zinc-50 hover:text-black transition active:scale-95 text-xs"
+                            className="w-full py-2.5 rounded-xl border border-zinc-200 text-zinc-700 font-bold hover:bg-zinc-50 hover:text-black transition active:scale-95 text-xs dark:border-none dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-600"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={uploading}
-                            className="w-full py-2.5 rounded-xl bg-black text-white font-bold hover:bg-zinc-800 shadow-sm transition active:scale-95 text-xs disabled:opacity-50 disabled:pointer-events-none"
+                            className="w-full py-2.5 rounded-xl bg-black text-white font-bold hover:bg-zinc-800 shadow-sm transition active:scale-95 text-xs disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:text-black dark:hover:bg-zinc-200"
                         >
                             {uploading ? "Publishing..." : "Publish Event"}
                         </button>
