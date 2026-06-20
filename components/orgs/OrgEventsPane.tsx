@@ -25,5 +25,5 @@ export default async function OrgEventsPane({ org }: { org: orgType }) {
         }
     }) || [];
 
-    return <OrgEventsPaneClient orgEvents={events} currentRole={org.role} orgId={org.id} />
+    return <OrgEventsPaneClient orgEvents={events} slug={org.slug} currentRole={org.role} orgId={org.id} />
 }

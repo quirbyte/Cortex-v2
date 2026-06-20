@@ -18,8 +18,7 @@ export default async function SettingsPage() {
         select: {
             id: true,
             name: true,
-            image: true,
-            mode: true
+            image: true
         }
     });
 
@@ -32,8 +31,7 @@ export default async function SettingsPage() {
     const flattenedUser = {
         id: user.id,
         name,
-        image: user.image,
-        mode: user.mode
+        image: user.image
     }
 
     return <SettingPageClient user={flattenedUser} />

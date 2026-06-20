@@ -12,3 +12,5 @@
 ::-webkit-scrollbar{
   display: none;
 }
+
+@variant dark (&:where(.dark, .dark *));

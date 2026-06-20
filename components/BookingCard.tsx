@@ -32,9 +32,9 @@ export default function BookingCard({ booking }: { booking: userBookingsType }) 
     }
 
     return <>
-        <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl border border-zinc-200/60 bg-white transition-all duration-200 hover:border-zinc-300">
+        <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl border border-zinc-200/60 bg-white transition-all duration-200 hover:border-zinc-300 dark:bg-zinc-950 dark:border-zinc-800 dark:hover:border-zinc-600">
             <div className="flex items-center gap-3.5 min-w-0 w-full sm:w-auto">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-zinc-100 overflow-hidden shrink-0 border border-zinc-200/40">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-zinc-100 dark:bg-zinc-950 overflow-hidden shrink-0 border border-zinc-200/40 dark:border-zinc-800">
                     {booking.event.image ? <img
                         src={booking.event.image}
                         alt="event pic"
@@ -46,7 +46,7 @@ export default function BookingCard({ booking }: { booking: userBookingsType }) 
                     />}
                 </div>
                 <div className="min-w-0 flex-1">
-                    <h4 className="font-bold text-sm sm:text-base tracking-tight text-zinc-900 truncate">
+                    <h4 className="font-bold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-white truncate">
                         {booking.event.name}
                     </h4>
                     <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-0.5 text-[11px] sm:text-xs text-zinc-400 font-medium">
@@ -75,7 +75,7 @@ export default function BookingCard({ booking }: { booking: userBookingsType }) 
             </div>
             <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2.5 sm:pt-0 border-t sm:border-t-0 border-zinc-100">
                 <div className="text-left sm:text-right font-mono shrink-0">
-                    <span className="text-sm sm:text-base font-black text-zinc-900 block leading-none">
+                    <span className="text-sm sm:text-base font-black text-zinc-900 dark:text-white block leading-none">
                         {booking.event.price * booking.count === 0 ? "FREE" : `₹${booking.event.price * booking.count}`}
                     </span>
                     <span className="text-[10px] text-zinc-400 font-medium block mt-1 sm:mt-0.5 whitespace-nowrap">

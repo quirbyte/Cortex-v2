@@ -54,17 +54,17 @@ export default function MembersPaneClient({
     return (
         <>
             <div className="w-full space-y-8 font-manrope animate-in fade-in duration-200">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5 dark:border-zinc-800">
                     <div className="space-y-0.5">
-                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-black flex items-center gap-2">
+                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-black dark:text-white flex items-center gap-2">
                             <Users size={16} className="text-zinc-400 sm:w-4.5 sm:h-4.5" />
                             Member Management
                         </h2>
                         <p className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-relaxed">
-                            Role-isolated roster segments running under workspace context <span className="font-mono text-zinc-600 font-bold">/{org.slug}</span>
+                            Role-isolated roster segments running under workspace context <span className="font-mono text-amber-600 font-bold dark:text-blue-500">/{org.slug}</span>
                         </p>
                     </div>
-                    <button onClick={() => setIsFormOpen(true)} className="inline-flex items-center justify-center gap-1.5 bg-black text-white text-[11px] sm:text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-lg sm:rounded-xl hover:bg-zinc-800 transition active:scale-95 shadow-sm self-start sm:self-center shrink-0">
+                    <button onClick={() => setIsFormOpen(true)} className="inline-flex items-center justify-center gap-1.5 bg-black text-white text-[11px] sm:text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-lg sm:rounded-xl hover:bg-zinc-800 transition active:scale-95 shadow-sm self-start sm:self-center shrink-0 dark:bg-white dark:hover:bg-zinc-200 dark:text-black">
                         <UserPlus size={13} strokeWidth={2.5} className="sm:w-3.5 sm:h-3.5" />
                         Invite Member
                     </button>
@@ -112,32 +112,37 @@ export default function MembersPaneClient({
                 </div>
             </div>
             {
-                isFormOpen && <div className="fixed flex inset-0 justify-center items-center z-999 backdrop-blur-xl">
-                    <div className="relative w-90 h-63 bg-zinc-100 border border-zinc-100 rounded-2xl p-4">
+                isFormOpen && <div className="fixed flex inset-0 justify-center items-center z-999 backdrop-blur-md bg-zinc-950/40">
+                    <div className="relative w-90 h-63 bg-zinc-100 dark:bg-zinc-950 dark:border-zinc-800 border border-zinc-100 rounded-2xl p-4">
                         <button
-                            onClick={() => setIsFormOpen(false)}
-                            className="absolute right-4 top-4 p-1.5 text-zinc-400 hover:text-zinc-700 hover:bg-white rounded-lg transition-colors"
+                            disabled={loading}
+                            onClick={() => {
+                                setIsFormOpen(false);
+                                setEmail("");
+                                setError(false);
+                            }}
+                            className="absolute top-4 right-4 h-8 w-8 flex rounded-xl border border-zinc-100 hover:bg-zinc-50 justify-center items-center text-zinc-500 hover:text-black transition-all disabled:opacity-50 dark:border-zinc-800"
                         >
-                            <X size={16} />
+                            <X size={15} />
                         </button>
                         <h1 className="font-bold tracking-tight text-xl text-center">Add Member</h1>
                         <p className="text-xs text-zinc-400 text-center">Fill in member details</p>
                         <form onSubmit={handleSubmit} className="mt-2 flex flex-col gap-2">
-                            <div className="flex border border-zinc-200 rounded-md p-2 cursor-default uppercase text-xs tracking-wider font-semibold">
-                                <span onClick={() => setRole("ADMIN")} className={`w-[33%] p-1 text-center ${role === "ADMIN" ? `bg-black text-white rounded-md` : ``}`}>Admin</span>
-                                <span onClick={() => setRole("MODERATOR")} className={`w-[33%] p-1 text-center ${role === "MODERATOR" ? `bg-black text-white rounded-md` : ``}`}>Moderator</span>
-                                <span onClick={() => setRole("VOLUNTEER")} className={`w-[33%] p-1 text-center ${role === "VOLUNTEER" ? `bg-black text-white rounded-md` : ``}`}>Volunteer</span>
+                            <div className="flex border border-zinc-200 dark:border-zinc-800 rounded-md p-2 cursor-default uppercase text-xs tracking-wider font-semibold">
+                                <span onClick={() => setRole("ADMIN")} className={`w-[33%] p-1 text-center ${role === "ADMIN" ? `bg-black text-white rounded-md dark:bg-white dark:text-black` : ``}`}>Admin</span>
+                                <span onClick={() => setRole("MODERATOR")} className={`w-[33%] p-1 text-center ${role === "MODERATOR" ? `bg-black text-white rounded-md dark:bg-white dark:text-black` : ``}`}>Moderator</span>
+                                <span onClick={() => setRole("VOLUNTEER")} className={`w-[33%] p-1 text-center ${role === "VOLUNTEER" ? `bg-black text-white rounded-md dark:bg-white dark:text-black` : ``}`}>Volunteer</span>
                             </div>
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm tracking-tight font-medium ml-2">Email:</label>
                                 <div className="flex flex-col">
-                                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="golden-jubilee" className="w-full bg-white py-2 px-4 rounded-3xl focus:outline-0 text-sm tracking-wide" />
+                                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="golden-jubilee" className="w-full bg-white py-2 px-4 rounded-3xl focus:outline-0 text-sm tracking-wide dark:bg-zinc-800" />
                                     {error && <p className="text-[10px] text-red-500 ml-4">Invalid email</p>}
                                 </div>
                             </div>
                             <div className="w-full gap-7 flex justify-between mt-2">
-                                <button onClick={handleDiscard} className="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-200/50 text-xs font-bold p-2.5 px-4 rounded-2xl transition-all active:scale-95">Discard changes</button>
-                                <button disabled={loading} type="submit" className="bg-black text-white text-xs font-semibold p-2 px-4 rounded-2xl active:scale-95 hover:bg-zinc-800 disabled:bg-zinc-800">Confirm Creation</button>
+                                <button onClick={handleDiscard} className="text-zinc-500 hover:text-zinc-800 hover:bg-zinc-200/50 text-xs font-bold p-2.5 px-4 rounded-2xl transition-all active:scale-95 dark:hover:text-zinc-500 dark:hover:bg-zinc-900">Discard changes</button>
+                                <button disabled={loading} type="submit" className="bg-black text-white text-xs font-semibold p-2 px-4 rounded-2xl active:scale-95 hover:bg-zinc-800 disabled:opacity-50 dark:bg-white dark:text-black">Confirm Creation</button>
                             </div>
                         </form>
                     </div>

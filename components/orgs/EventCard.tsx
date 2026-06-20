@@ -25,8 +25,8 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
     }
 
     return <>
-        <div className="group relative flex flex-col w-full rounded-2xl border border-zinc-200/80 bg-white overflow-hidden transition-all duration-300 hover:shadow-md hover:border-zinc-300">
-            <div className="relative w-full aspect-16/7 bg-zinc-100 overflow-hidden border-b border-zinc-100">
+        <div className="group relative flex flex-col w-full rounded-2xl border border-zinc-200/80 bg-white dark:bg-zinc-950 dark:border-zinc-800 overflow-hidden transition-all duration-300 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700">
+            <div className="relative w-full aspect-16/7 bg-zinc-100 overflow-hidden border-b border-zinc-100 dark:bg-zinc-950 dark:border-zinc-800">
                 {
                     !event.image ? (
                         <img
@@ -62,7 +62,7 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
             </div>
             <div className="p-3.5 flex flex-col flex-1 justify-between space-y-3.5">
                 <div className="space-y-2">
-                    <div className="flex items-center gap-1 text-[9px] font-bold font-mono text-amber-600 uppercase tracking-wider">
+                    <div className="flex items-center gap-1 text-[9px] font-bold font-mono text-amber-600 dark:text-blue-500 uppercase tracking-wider">
                         <Clock size={10} /> {
                             new Date(event.startsAt).toLocaleDateString("en-US", {
                                 month: "short",
@@ -75,7 +75,7 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         }
                     </div>
                     <div className="space-y-1">
-                        <h4 className="font-bold text-sm sm:text-base tracking-tight text-zinc-900 line-clamp-1 group-hover:text-black transition-colors">
+                        <h4 className="font-bold text-sm sm:text-base tracking-tight text-zinc-900 line-clamp-1 group-hover:text-black transition-colors dark:text-white dark:group-hover:text-zinc-200">
                             {event.name}
                         </h4>
                         <p className="text-[11px] sm:text-xs text-zinc-400 font-medium line-clamp-1">
@@ -86,14 +86,14 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         <Tag size={11} />
                         {
                             event.tags.map((tag) => (
-                                <span key={tag} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[9px] font-bold font-mono bg-zinc-100 text-zinc-600 border border-zinc-200/30 uppercase tracking-tight">
+                                <span key={tag} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[9px] font-bold font-mono bg-zinc-100 text-zinc-600 border border-zinc-200/30 dark:bg-zinc-800 dark:text-zinc-400 dark:border-none uppercase tracking-tight">
                                     {tag}
                                 </span>
                             ))
                         }
                     </div>
                 </div>
-                <div className="space-y-2 border-t border-zinc-100 pt-2.5">
+                <div className="space-y-2 border-t border-zinc-100 dark:border-zinc-800 pt-2.5">
                     <p className="text-[11px] text-zinc-500 font-medium flex items-center gap-1 truncate">
                         <MapPin size={11} className="text-zinc-400 shrink-0" />
                         {event.venue}
@@ -104,13 +104,13 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                                 <span className="flex items-center gap-0.5"><Users size={10} /> Slots</span>
                                 <span className="text-zinc-600">{event.sold}/{event.capacity}</span>
                             </div>
-                            <div className="w-full h-1 bg-zinc-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-black rounded-full" style={{ width: `${(event.sold / event.capacity) * 100}%` }} />
+                            <div className="w-full h-1 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                <div className="h-full bg-black dark:bg-white rounded-full" style={{ width: `${(event.sold / event.capacity) * 100}%` }} />
                             </div>
                         </div>
                         <div className="text-right shrink-0 font-mono pl-3">
                             <span className="text-xs text-zinc-400 font-bold block leading-none uppercase text-[8px] tracking-wider mb-0.5">Price</span>
-                            <span className="text-base sm:text-lg font-black text-black leading-none tracking-tight">
+                            <span className="text-base sm:text-lg font-black text-black dark:text-white leading-none tracking-tight">
                                 {event.price!==0?`₹${event.price}` : "FREE" }
                             </span>
                         </div>

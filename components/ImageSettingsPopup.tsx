@@ -71,8 +71,7 @@ export default function ImagePopup({
 
     return (
         <div className="fixed inset-0 backdrop-blur-md bg-zinc-950/40 flex items-center justify-center w-full z-50 animate-fade-in">
-            <div className="w-85 bg-white rounded-2xl border border-zinc-200/80 shadow-2xl relative p-6 flex flex-col items-center gap-6">
-
+            <div className="w-85 bg-white dark:bg-zinc-950 dark:border-zinc-800  rounded-2xl border border-zinc-200/80 shadow-2xl relative p-6 flex flex-col items-center gap-6">
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -84,17 +83,17 @@ export default function ImagePopup({
                 <button
                     disabled={loading}
                     onClick={() => setIsImagePopup(false)}
-                    className="absolute top-4 right-4 h-8 w-8 flex rounded-xl border border-zinc-100 hover:bg-zinc-50 justify-center items-center text-zinc-500 hover:text-black transition-all disabled:opacity-50"
+                    className="absolute top-4 right-4 h-8 w-8 flex rounded-xl border border-zinc-100 hover:bg-zinc-50 justify-center items-center text-zinc-500 hover:text-black transition-all disabled:opacity-50 dark:border-zinc-800"
                 >
                     <X size={15} />
                 </button>
 
                 <div className="text-center w-full mt-2">
-                    <h3 className="text-base font-black tracking-tight text-zinc-900">Profile Picture</h3>
+                    <h3 className="text-base font-black tracking-tight text-zinc-900 dark:text-white">Profile Picture</h3>
                     <p className="text-xs text-zinc-400 mt-0.5">Customize your account avatar presentation</p>
                 </div>
 
-                <div className="h-28 w-28 rounded-full bg-zinc-50 border border-zinc-200 p-1 shadow-inner relative group shrink-0">
+                <div className="h-28 w-28 rounded-full bg-zinc-50 border border-zinc-200 dark:bg-zinc-950 dark:border-zinc-800 p-1 shadow-inner relative group shrink-0">
                     <div className="h-full w-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center select-none">
                         {imageUrl ? (
                             <img
@@ -117,7 +116,7 @@ export default function ImagePopup({
                             type="button"
                             onClick={triggerFileInput}
                             disabled={loading}
-                            className="py-2.5 px-3 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 hover:text-zinc-900 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
+                            className="py-2.5 px-3 bg-white hover:bg-zinc-50 border border-zinc-200 text-zinc-700 hover:text-zinc-900 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 dark:bg-zinc-900 dark:text-white dark:border-none dark:hover:text-white dark:hover:bg-zinc-800"
                         >
                             <Upload size={13} />
                             Update
@@ -130,7 +129,7 @@ export default function ImagePopup({
                                 setImageFile(null);
                             }}
                             disabled={loading || !imageUrl}
-                            className="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200/40 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:hidden"
+                            className="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200/40 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:hidden dark:bg-red-950 dark:text-white"
                         >
                             <Trash2 size={13} />
                             Remove
@@ -141,7 +140,7 @@ export default function ImagePopup({
                         type="button"
                         onClick={() => handleConfirmPhoto()}
                         disabled={loading}
-                        className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.99] disabled:opacity-50"
+                        className="w-full py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.99] disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200 dark:hover:text-zinc-950"
                     >
                         {loading ? (
                             <Loader2 size={14} className="animate-spin" />

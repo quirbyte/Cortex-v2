@@ -9,7 +9,7 @@ export function LoadingTabSkeleton({ data }: { data: string }) {
       duration: 0.5,
       repeat: Infinity,
       ease: easeInOut,
-    }} className="w-full min-h-screen font-xl font-manrope flex items-center justify-center">
+    }} className="w-full min-h-screen text-xl font-manrope flex items-center justify-center text-black dark:text-white">
       Fetching {data}...
     </motion.div>
   );

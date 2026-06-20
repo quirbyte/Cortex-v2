@@ -20,7 +20,7 @@ export default async function OrgDetailedPage({ params }: Props) {
             slug: slug,
             Roles: {
                 some: {
-                    userId: userId, // Enforces that the user must belong to this org
+                    userId: userId,
                 },
             },
         },

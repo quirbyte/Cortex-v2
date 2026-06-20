@@ -22,10 +22,10 @@ export default function MemberCard({ member, orgId, currRole }: { member: Member
         }
     }
 
-    return <div className="group relative flex items-center justify-between w-full rounded-xl sm:rounded-2xl border border-zinc-200/80 bg-white p-2.5 sm:p-4 transition-all duration-300 hover:shadow-sm hover:border-zinc-300 overflow-hidden">
-        <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-zinc-50 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:bg-zinc-100/60 z-0" />
+    return <div className="group relative flex items-center justify-between w-full rounded-xl sm:rounded-2xl border border-zinc-200/80 bg-white p-2.5 sm:p-4 transition-all duration-300 hover:shadow-sm hover:border-zinc-300 overflow-hidden dark:bg-zinc-950 dark:border-zinc-800 dark:hover:border-zinc-700">
+        <div className="absolute -right-6 -bottom-6 w-20 h-20 bg-zinc-50 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:bg-zinc-100/60 z-0 dark:bg-zinc-950 dark:group-hover:bg-zinc-900" />
         <div className="flex items-center gap-2 sm:gap-3.5 z-10 min-w-0 flex-1">
-            <div className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-zinc-100 text-zinc-800 font-black text-xs sm:text-sm border border-zinc-200/50 uppercase font-mono tracking-tight select-none overflow-hidden">
+            <div className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-zinc-100 text-zinc-800 dark:bg-zinc-950 dark:text-white font-black text-xs sm:text-sm border border-zinc-200/50 dark:border-zinc-800 uppercase font-mono tracking-tight select-none overflow-hidden">
                 {member.image ? (
                     <img
                         src={member.image}
@@ -39,7 +39,7 @@ export default function MemberCard({ member, orgId, currRole }: { member: Member
             </div>
             <div className="min-w-0 pr-2">
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                    <h4 className="font-bold text-xs sm:text-base tracking-tight text-zinc-900 group-hover:text-black transition-colors truncate">
+                    <h4 className="font-bold text-xs sm:text-base tracking-tight text-zinc-900 group-hover:text-black transition-colors truncate dark:text-zinc-200 dark:group-hover:text-zinc-300">
                         {member.name}
                     </h4>
                     {member.role === "ADMIN" && member.creator === member.userId && (

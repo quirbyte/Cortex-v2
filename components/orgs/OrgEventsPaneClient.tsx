@@ -5,7 +5,7 @@ import EventCard from "./EventCard";
 import { orgEventType } from "./OrgEventsPane";
 import { useState } from "react";
 
-export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId }: { orgEvents: orgEventType[]; currentRole: string; orgId: string }) {
+export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slug }: { orgEvents: orgEventType[]; currentRole: string; orgId: string; slug: string }) {
     const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
     const [desc, setDesc] = useState<string>("");
@@ -113,19 +113,19 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId }: {
     return (
         <>
             <div className="w-full space-y-6 font-manrope">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5 dark:border-zinc-800">
                     <div className="space-y-0.5">
-                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-black flex items-center gap-2">
+                        <h2 className="text-base sm:text-lg font-bold tracking-tight text-black dark:text-white flex items-center gap-2">
                             <Calendar size={16} className="text-zinc-400 sm:w-4.5 sm:h-4.5" />
                             Organization Events
                         </h2>
                         <p className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-relaxed">
-                            Schedule scheduling slots, track live ticketing capacity, and modify parameters under <span className="font-mono text-zinc-600 font-bold">/workspace</span>
+                            Schedule scheduling slots, track live ticketing capacity, and modify parameters under <span className="font-mono text-zinc-600 dark:text-blue-500 font-bold">/{slug}</span>
                         </p>
                     </div>
                     <button
                         onClick={() => setIsFormOpen(true)}
-                        className="inline-flex items-center justify-center gap-1.5 bg-black text-white text-[11px] sm:text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-lg sm:rounded-xl hover:bg-zinc-800 transition active:scale-95 shadow-sm self-start sm:self-center shrink-0"
+                        className="inline-flex items-center justify-center gap-1.5 bg-black text-white text-[11px] sm:text-xs font-bold py-2 sm:py-2.5 px-3.5 sm:px-4 rounded-lg sm:rounded-xl hover:bg-zinc-800 transition active:scale-95 shadow-sm self-start sm:self-center shrink-0 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
                     >
                         <Plus size={13} strokeWidth={2.5} className="sm:w-3.5 sm:h-3.5" />
                         Create Event

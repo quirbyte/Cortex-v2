@@ -40,19 +40,19 @@ export default function HomePage() {
     }, [events.length]);
 
     return (
-        <div className="min-h-screen w-full pt-5 p-4 font-manrope bg-zinc-50/50">
-            <header className="flex items-center justify-between w-full border-b border-black/5 pb-4">
+        <div className="min-h-screen w-full pt-7 md:pt-5 p-4 font-manrope bg-zinc-50/50 dark:bg-zinc-950">
+            <header className="flex items-center justify-between w-full border-b border-black/5 dark:border-zinc-800 pb-4">
                 <div className="hidden md:block">
-                    <p className="text-zinc-400 text-xs font-semibold tracking-wider uppercase">Welcome back,</p>
-                    <p className="text-xl font-bold tracking-tight text-black">Soumyadip</p>
+                    <p className="text-zinc-400 dark:text-zinc-600 text-xs font-semibold tracking-wider uppercase">Welcome back,</p>
+                    <p className="text-xl font-bold tracking-tight text-black dark:text-zinc-400">Soumyadip</p>
                 </div>
                 <div className="flex flex-col items-end w-full md:w-auto">
-                    <h1 className="text-xl tracking-tight font-black text-black">Dashboard</h1>
-                    <p className="text-xs text-amber-600 font-mono mt-0.5">{formattedDate}</p>
+                    <h1 className="text-xl tracking-tight font-black text-black dark:text-white">Dashboard</h1>
+                    <p className="text-xs text-amber-600 dark:text-blue-500 font-mono mt-0.5">{formattedDate}</p>
                 </div>
             </header>
 
-            <div className="relative mt-3 w-full rounded-2xl bg-black overflow-hidden flex flex-col md:flex-row h-120 md:h-96 shadow-sm group">
+            <div className="relative mt-3 w-full rounded-2xl bg-black dark:bg-zinc-800 overflow-hidden flex flex-col md:flex-row h-120 md:h-96 shadow-sm group">
                 <div className="relative w-full md:w-3/5 h-1/2 md:h-full shrink-0 overflow-hidden">
                     <img
                         src={events[current].img}
@@ -62,7 +62,7 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-linear-to-t from-black md:bg-linear-to-r md:from-transparent md:to-black/80" />
                 </div>
 
-                <div className="relative flex-1 h-1/2 md:h-full bg-black p-6 md:p-10 flex flex-col justify-center items-start text-left z-10">
+                <div className="relative flex-1 h-1/2 md:h-full bg-black dark:bg-black/60 p-6 md:p-10 flex flex-col justify-center items-start text-left z-10">
                     <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-2.5 py-1 rounded-full mb-3">
                         Featured Event
                     </span>
@@ -106,30 +106,30 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <h1 className="text-left text-3xl tracking-tighter font-bold my-7">Trending</h1>
+            <h1 className="text-left text-3xl tracking-tighter font-bold my-7 text-black dark:text-white">Trending</h1>
 
             <div className="mt-8 flex flex-col lg:flex-row w-full gap-5">
-                <div className="w-full lg:w-1/2 h-100 bg-white border border-black/10 rounded-2xl flex flex-col p-5 shadow-xs">
+                <div className="w-full lg:w-1/2 h-100 bg-white dark:bg-zinc-950 dark:border-zinc-800 border border-black/10 rounded-2xl flex flex-col p-5 shadow-xs">
                     <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/5">
                         <div className="flex items-center gap-2">
                             <TrendingUp size={18} className="text-amber-500" />
-                            <h2 className="text-sm font-bold tracking-tight text-black">Top Events</h2>
+                            <h2 className="text-sm font-bold tracking-tight text-black dark:text-white">Top Events</h2>
                         </div>
-                        <span className="text-[10px] bg-zinc-100 px-2.5 py-1 rounded-md font-bold text-zinc-500 tracking-wide uppercase">Hot Now</span>
+                        <span className="text-[10px] bg-zinc-100 dark:bg-zinc-900 dark:text-white px-2.5 py-1 rounded-md font-bold text-zinc-500 tracking-wide uppercase">Hot Now</span>
                     </div>
 
                     <div className="flex-1 flex flex-col gap-2.5 overflow-y-auto no-scrollbar">
                         {events.map((event, idx) => (
                             <div
                                 key={idx}
-                                className="w-full bg-zinc-50 border border-black/5 flex items-center justify-between p-3.5 rounded-xl font-medium transition-all duration-200 hover:bg-black hover:text-white group/row"
+                                className="w-full bg-zinc-50 dark:bg-zinc-900  border border-black/5 flex items-center justify-between p-3.5 rounded-xl font-medium transition-all duration-200 hover:bg-black hover:text-white dark:hover:text-black group/row dark:hover:bg-zinc-50"
                             >
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <span className="text-xs font-mono text-black/40 group-hover/row:text-white/40">0{idx + 1}</span>
-                                    <p className="text-xs md:text-sm font-bold truncate text-zinc-800 group-hover/row:text-white">{event.title}</p>
+                                    <span className="text-xs font-mono text-black/40 dark:text-white/40 group-hover/row:text-white/40 dark:group-hover/row:text-black/40">0{idx + 1}</span>
+                                    <p className="text-xs md:text-sm font-bold truncate text-zinc-800 dark:text-zinc-400 group-hover/row:text-white dark:group-hover/row:text-black">{event.title}</p>
                                 </div>
 
-                                <button className="shrink-0 ml-4 py-1.5 px-3 rounded-lg bg-black text-white text-[11px] font-bold tracking-tight border border-white/10 group-hover/row:bg-amber-400 group-hover/row:text-black transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer">
+                                <button className="shrink-0 ml-4 py-1.5 px-3 rounded-lg bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold tracking-tight border border-white/10 group-hover/row:bg-amber-400 group-hover/row:text-black transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer">
                                     <TicketCheck size={13} />
                                     <span className="hidden sm:inline">Book Now</span>
                                 </button>
@@ -138,13 +138,13 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <div className="w-full lg:w-1/2 h-100 bg-white border border-black/10 rounded-2xl p-5 flex flex-col shadow-xs">
+                <div className="w-full lg:w-1/2 h-100 bg-white dark:bg-zinc-950 dark:border-zinc-800 dark: border border-black/10 rounded-2xl p-5 flex flex-col shadow-xs">
                     <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/5">
                         <div className="flex items-center gap-2">
                             <Calendar size={18} className="text-amber-500" />
-                            <h2 className="text-sm font-bold tracking-tight text-black">Event Calendar</h2>
+                            <h2 className="text-sm font-bold tracking-tight text-black dark:text-white">Event Calendar</h2>
                         </div>
-                        <span className="text-[10px] bg-black text-white px-2.5 py-1 rounded-md font-mono font-bold tracking-wide uppercase">
+                        <span className="text-[10px] bg-black text-white dark:bg-zinc-900 px-2.5 py-1 rounded-md font-mono font-bold tracking-wide uppercase">
                             June 2026
                         </span>
                     </div>
@@ -187,15 +187,15 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-2 pt-4 border-t border-black/5 mt-3 text-[10px] font-bold text-zinc-500">
-                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 dark:bg-zinc-900 dark:text-white py-1.5 rounded-lg border border-black/5">
                             <span className="h-2 w-2 rounded-sm bg-amber-400" />
                             <span>Today</span>
                         </div>
-                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
-                            <span className="h-2 w-2 rounded-sm bg-black" />
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 dark:bg-zinc-900 dark:text-white py-1.5 rounded-lg border border-black/5">
+                            <span className="h-2 w-2 rounded-sm bg-blue-600" />
                             <span>Booked (2)</span>
                         </div>
-                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 py-1.5 rounded-lg border border-black/5">
+                        <div className="flex items-center gap-1.5 justify-center bg-zinc-50 dark:bg-zinc-900 dark:text-white py-1.5 rounded-lg border border-black/5">
                             <span className="h-2 w-2 rounded-sm bg-zinc-200" />
                             <span>Available</span>
                         </div>
@@ -203,14 +203,14 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <h1 className="text-left text-3xl tracking-tighter font-bold mt-7">Share with people</h1>
+            <h1 className="text-left text-3xl tracking-tighter font-bold mt-7 text-black dark:text-white">Share with people</h1>
             <div className="mt-3 flex gap-4 items-center">
                 <div>
                     <img src="/favicon.svg" alt="" className="w-13 h-13 object-cover" />
                 </div>
                 <div>
-                    <p className="font-semibold text-sm md:text-md">Spread the word</p>
-                    <p className="font-light text-[10px]">Help us grow</p>
+                    <p className="font-semibold text-sm md:text-md text-black dark:text-white">Spread the word</p>
+                    <p className="font-light text-[10px] text-black dark:text-white">Help us grow</p>
                 </div>
                 <div className="flex gap-3 items-center ml-7">
                     <img src="/linkedin.svg" alt="" className="h-8 w-8 flex items-center justify-center rounded-full object-contain" />
