@@ -93,7 +93,7 @@ export default function OrgSettingsPane({ org, userId }: { org: orgType; userId:
                         Organization Settings
                     </h2>
                     <p className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-relaxed">
-                        Modify organization name and slug under <span className="font-mono text-zinc-600 dark:text-blue-500 font-bold">/{org.slug}</span>
+                        Modify organization name and slug under <span className="font-mono text-amber-600 dark:text-blue-500 font-bold">/{org.slug}</span>
                     </p>
                 </div>
             </div>

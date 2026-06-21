@@ -120,7 +120,7 @@ export default function OrgEventsPaneClient({ orgEvents, currentRole, orgId, slu
                             Organization Events
                         </h2>
                         <p className="text-[10px] sm:text-xs text-zinc-400 font-medium leading-relaxed">
-                            Schedule scheduling slots, track live ticketing capacity, and modify parameters under <span className="font-mono text-zinc-600 dark:text-blue-500 font-bold">/{slug}</span>
+                            Schedule scheduling slots, track live ticketing capacity, and modify parameters under <span className="font-mono text-amber-600 dark:text-blue-500 font-bold">/{slug}</span>
                         </p>
                     </div>
                     <button

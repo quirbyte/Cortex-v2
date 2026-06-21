@@ -21,7 +21,11 @@ export default async function DashboardPage({ searchParams }: PageProps) {
 
   return (
     <>
-      {currentTab === "home" && <HomePage />}
+      {currentTab === "home" && (
+        <Suspense fallback={<LoadingTabSkeleton data={"dashboard"} />}>
+          <HomePage />
+        </Suspense>
+      )}
       {currentTab === "events" && (
         <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
           <EventPage />
