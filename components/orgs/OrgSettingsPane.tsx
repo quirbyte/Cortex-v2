@@ -86,7 +86,7 @@ export default function OrgSettingsPane({ org, userId }: { org: orgType; userId:
 
     return <>
         <div className="w-full flex flex-col gap-3 font-manrope">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-1 md:pb-3 border-b border-black/5 dark:border-zinc-800">
                 <div className="space-y-0.5">
                     <h2 className="text-base sm:text-lg font-bold tracking-tight text-black dark:text-white flex items-center gap-2">
                         <Settings2 size={16} className="text-zinc-400 sm:w-4.5 sm:h-4.5" />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lustria, Manrope } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/components/Theme-provider";
 
 const lustria = Lustria({
   subsets: ["latin"],
