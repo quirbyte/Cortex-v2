@@ -1,5 +1,8 @@
+import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import HomePageClient from "@/components/HomePageClient";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export type event = {
     id: string;
@@ -10,9 +13,21 @@ export type event = {
     sold: number;
 }
 
+export type userBooking = {
+    id: string;
+    event: {
+        startsAt: Date;
+    };
+}
+
 export default async function HomePage() {
-    const topEvents: event[] = await getGlobalTopEvents();
-    return <HomePageClient topEvents={topEvents} />
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+        redirect("/signin");
+    }
+    const userId = (session.user as any).id;
+    const [topEvents, userBookings] = await Promise.all([getGlobalTopEvents(), getUserBookings(userId)]);
+    return <HomePageClient topEvents={topEvents} userBookings={userBookings} />
 }
 
 async function getGlobalTopEvents() {
@@ -30,7 +45,21 @@ async function getGlobalTopEvents() {
         }
     });
 
-    return events
-        .sort((a, b) => (b.sold / b.capacity) - (a.sold / a.capacity))
-        .slice(0, 5);
+    return events.sort((a, b) => (b.sold / b.capacity) - (a.sold / a.capacity)).slice(0, 5);
+}
+
+async function getUserBookings(id: string) {
+    return await prisma.booking.findMany({
+        where: {
+            bookerId: id
+        },
+        select: {
+            id: true,
+            event: {
+                select: {
+                    startsAt: true
+                }
+            }
+        }
+    })
 }
