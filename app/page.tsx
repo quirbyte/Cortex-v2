@@ -486,7 +486,7 @@ export default function SaaSPlatformLanding() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full p-4 border border-zinc-200/80 dark:border-zinc-900/80 bg-[#fcfcfd]/95 dark:bg-[#09090b]/95 backdrop-blur-2xl rounded-2xl shadow-xl flex flex-col gap-1.5"
+              className="w-full p-4 border border-zinc-200/80 dark:border-zinc-500 bg-[#fcfcfd]/95 dark:bg-zinc-600 backdrop-blur-2xl rounded-2xl shadow-xl flex flex-col gap-1.5"
             >
               {["Docs", "Features", "Pricing", "About Us"].map((item, i) => (
                 <button
@@ -495,7 +495,7 @@ export default function SaaSPlatformLanding() {
                     setMobileMenuOpen(false);
                     item === "Docs" ? openDocs() : router.push(`#section-${i}`);
                   }}
-                  className="w-full text-left px-4 py-3 bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-100 dark:hover:bg-zinc-900 border border-zinc-200 dark:border-zinc-900 rounded-xl text-xs font-bold text-zinc-700 dark:text-zinc-300 transition-all"
+                  className="w-full text-left px-4 py-3 bg-zinc-50 dark:bg-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-900 border border-zinc-200 dark:border-zinc-900 rounded-xl text-xs font-bold text-zinc-700 dark:text-zinc-300 transition-all"
                 >
                   {item}
                 </button>
