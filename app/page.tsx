@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, Variants } from "framer-motion";
 import {
   Shield, Building2,
-  Database, Fingerprint, Activity, BarChart3, Radio, Sliders,
+  Database, Fingerprint, BarChart3,
   Workflow, ArrowUpRight, Check, Sparkles, Globe, Command
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,9 +12,9 @@ import { useRouter } from "next/navigation";
 const VISUALS = {
   heroVideo: "/vid1.mp4",
   heroGrid: "/landingImg1.png",
-  analyticsPanel: "https://images.unsplash.com/photo-1543286386-713bcd26a0ce?auto=format&fit=crop&w=1200&q=80",
-  tenantIsolation: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-  portalMockup: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80"
+  analyticsPanel: "/landingImg4.png",
+  tenantIsolation: "/landingImage2.png",
+  portalMockup: "/landingImg3.png"
 };
 
 const GITHUB_DOCS_URL = "https://github.com/quirbyte/Cortex-v2/blob/master/README.md";
@@ -99,7 +99,7 @@ export default function SaaSPlatformLanding() {
           initial={{ y: -24, opacity: 0 }}
           animate={!isLoading ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full border border-zinc-200/80 dark:border-zinc-900/80 bg-[#fcfcfd]/85 dark:bg-[#09090b]/85 backdrop-blur-xl rounded-2xl shadow-md transition-all"
+          className="w-full border border-zinc-200/80 dark:border-zinc-900/80 bg-[#fcfcfd]/85 dark:bg-zinc-800/60 backdrop-blur-xl rounded-2xl shadow-md transition-all"
         >
           <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="flex items-center gap-8">
@@ -201,7 +201,7 @@ export default function SaaSPlatformLanding() {
                 onClick={() => router.push("/signin")}
                 className="w-full sm:w-auto px-7 py-4 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-black font-black text-xs rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 shadow-xl shadow-zinc-950/20 dark:shadow-white/10 group cursor-pointer"
               >
-                Sign in to Console
+                Sign in to Cortex
                 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform stroke-[2.5]" />
               </button>
               <button
@@ -256,9 +256,21 @@ export default function SaaSPlatformLanding() {
 
             <div className="space-y-2 pt-4">
               {[
-                { title: "Hierarchical Multi-Tenancy", desc: "Isolate distinct organizational structures, regional franchises, or white-label sub-brands.", icon: Building2 },
-                { title: "Dynamic DB Shard Routing", desc: "Compute separate read/write workloads dynamically per active tenant pipeline.", icon: Database },
-                { title: "Role-Based ACL Enforcers", desc: "Granular access matrices for event managers, dynamic security roles, and external operators.", icon: Fingerprint }
+                {
+                  title: "Dynamic Subdomain Routing",
+                  desc: "Instantly catch, resolve, and route incoming multi-tenant requests using fully isolated Next.js middleware subdomain parameters.",
+                  icon: Globe
+                },
+                {
+                  title: "Multi-Step Workspace Onboarding",
+                  desc: "Empower new organizations to seamlessly provision their custom tenant profiles, brand layouts, and localized variables.",
+                  icon: Workflow
+                },
+                {
+                  title: "Role-Based Access Control (RBAC)",
+                  desc: "Enforce strict security boundaries separating platform administrators, workspace coordinators, and standard event team members.",
+                  icon: Fingerprint
+                }
               ].map((tab, idx) => {
                 const Icon = tab.icon;
                 const active = activeFeatureTab === idx;
@@ -281,7 +293,7 @@ export default function SaaSPlatformLanding() {
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-zinc-100 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-2xl p-4 aspect-4/3 relative overflow-hidden group">
+          <div className="lg:col-span-7 bg-zinc-100 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-2xl p-4 aspect-16/8.75 relative overflow-hidden group">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeatureTab}
@@ -294,7 +306,7 @@ export default function SaaSPlatformLanding() {
                 <img
                   src={[VISUALS.tenantIsolation, VISUALS.analyticsPanel, VISUALS.portalMockup][activeFeatureTab]}
                   alt="Dynamic Cortex Configuration Frame"
-                  className="w-full h-full object-cover filter brightness-95 contrast-105"
+                  className="w-full h-full object-contain filter brightness-95 contrast-105"
                 />
                 <div className="absolute inset-0 bg-linear-to-r from-white/20 dark:from-zinc-950/40 to-transparent" />
               </motion.div>
@@ -318,20 +330,44 @@ export default function SaaSPlatformLanding() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {[
-            { title: "Realtime Webhook Clusters", desc: "Dispatch million-node custom updates downstream directly to client arrays instantly.", icon: Radio },
-            { title: "Custom Domain TLS Engine", desc: "Provision SSL automated domain proxy routers instantaneously for custom client instances.", icon: Globe },
-            { title: "White-Label Core Controls", desc: "Strip all Cortex identifiers. Re-brand systemic panels fully with matching brand profiles.", icon: Sliders },
-            { title: "Advanced telemetry Streams", desc: "Track organizational health, event registration drops, and node load in absolute realtime.", icon: Activity },
-            { title: "Workflow automation blocks", desc: "Build automated dependency processing rules inside individual organization trees.", icon: Workflow },
-            { title: "Consolidated Revenue Splits", desc: "Route platform fee balances dynamically across distributed stripe connective setups.", icon: BarChart3 }
+            {
+              title: "Dynamic Subdomain Isolation",
+              desc: "Automatically provision and route fully isolated workspaces using clean, dynamic subdomains for every tenant platform slice.",
+              icon: Globe
+            },
+            {
+              title: "Multi-Tenant Architecture",
+              desc: "Complete layout segregation supporting multi-brand ecosystems, distinct organizational trees, and isolated parameters.",
+              icon: Building2
+            },
+            {
+              title: "Custom Workspace Onboarding",
+              desc: "Streamlined multi-step creation flows enabling tenants to instantly configure profiles, access levels, and workspace shards.",
+              icon: Workflow
+            },
+            {
+              title: "Role-Based Access Control",
+              desc: "Secure granular matrices to separate event coordinators, global platform operators, and tenant-level managers seamlessly.",
+              icon: Fingerprint
+            },
+            {
+              title: "Centralized Console Analytics",
+              desc: "Track platform health, user engagement vectors, registration trends, and resource usage across all tenant shards.",
+              icon: BarChart3
+            },
+            {
+              title: "Unified Database Sharding",
+              desc: "Perform dynamic routing structures safely across high-throughput data pipelines to protect cross-tenant security bounds.",
+              icon: Database
+            }
           ].map((feat, i) => {
             const Icon = feat.icon;
             return (
               <motion.div
                 key={i}
                 variants={fFadeInUp}
-                whileHover={{ y: -5, borderColor: "rgba(251,191,36,0.3)" }}
-                className="p-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900/80 rounded-2xl space-y-4 transition-all group relative overflow-hidden shadow-xs"
+                whileHover={{ y: -5 }}
+                className="p-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900/80 hover:border-amber-500/40 dark:hover:border-amber-400/30 rounded-2xl space-y-4 transition-all duration-300 group relative overflow-hidden shadow-xs"
               >
                 <div className="h-9 w-9 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-amber-600 dark:text-amber-400 transition-colors group-hover:bg-zinc-900 dark:group-hover:bg-amber-400 group-hover:text-white dark:group-hover:text-black">
                   <Icon size={15} />
@@ -353,11 +389,33 @@ export default function SaaSPlatformLanding() {
           <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm font-light max-w-xl mx-auto">From single organization clusters up to worldwide isolated franchise pipelines.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
           {[
-            { name: "Developer Node", price: "$49", desc: "Perfect for localized events & staging setups.", features: ["Up to 3 isolated tenants", "Shared Proxy TLS routing", "Basic real-time Telemetry logs", "50,000 Monthly Active Sessions"] },
-            { name: "Scale Matrix", price: "$199", desc: "Production grade setups for multi-brand operations.", features: ["Up to 25 isolated tenants", "Custom Domain Mapping Nodes", "Advanced Webhook Automations", "500,000 Monthly Active Sessions", "White-Label Panel Core custom profiles"], popular: true },
-            { name: "Enterprise Shard", price: "Custom", desc: "Complete platform localization parameters.", features: ["Infinite Isolated Tenant DB routers", "Dedicated Proxy Routing Layers", "SLA contract models delivering guaranteed uptime bounds", "Unlimited concurrent operations", "Direct Infrastructure Core Slack access"] }
+            {
+              name: "Starter Shard",
+              price: "FREE",
+              desc: "Perfect for personal projects, testing, and initial multi-tenant staging configurations.",
+              features: [
+                "Up to 3 isolated organizations",
+                "Up to 5 events in an organization",
+                "Maximum 10 members in organization",
+                "Basic role-based access management",
+                "Community support channel"
+              ]
+            },
+            {
+              name: "Production Cluster",
+              price: "₹499",
+              desc: "Production-grade infrastructure built for high-scale multi-tenant operations and organizations.",
+              features: [
+                "Unlimited organizations",
+                "No limit to event creation or members per organization",
+                "Granular Multi-Role Access Control (RBAC)",
+                "Centralized console metrics & analytics",
+                "Priority infrastructure support"
+              ],
+              popular: true
+            }
           ].map((plan, i) => (
             <div key={i} className={`p-8 bg-white dark:bg-zinc-950 border rounded-3xl flex flex-col justify-between relative shadow-xs transition-all ${plan.popular ? "border-amber-400 ring-1 ring-amber-400/30" : "border-zinc-200 dark:border-zinc-900"}`}>
               {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-2.5 py-0.5 bg-amber-400 text-black font-mono font-bold text-[9px] uppercase tracking-wider rounded-full">Most Selected</span>}
@@ -368,7 +426,7 @@ export default function SaaSPlatformLanding() {
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-light tracking-tight text-zinc-950 dark:text-white">{plan.price}</span>
-                  {plan.price !== "Custom" && <span className="text-xs font-mono text-zinc-400">/mo</span>}
+                  {plan.price !== "Custom" && <span className="text-xs font-mono text-zinc-400">/month</span>}
                 </div>
                 <div className="h-px bg-zinc-100 dark:bg-zinc-900" />
                 <ul className="space-y-3">
@@ -388,76 +446,48 @@ export default function SaaSPlatformLanding() {
         </div>
       </section>
 
-      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 bg-[#fcfcfd] dark:bg-[#09090b]">
-        <div className="bg-linear-to-b from-white to-zinc-50 dark:from-zinc-900/60 dark:to-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 sm:p-12 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 relative overflow-hidden shadow-xs">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/5 rounded-full filter blur-3xl pointer-events-none" />
-
-          <div className="space-y-6 max-w-xl text-left">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded text-[10px] font-bold text-zinc-600 dark:text-zinc-400 tracking-wider font-mono">
-              <Shield size={11} className="text-amber-600 dark:text-amber-400" />
-              Compliance Shield Standard
-            </div>
-            <h3 className="text-3xl sm:text-5xl font-light tracking-tight text-zinc-950 dark:text-white leading-tight">
-              Looking for single-tenant custom shards?
-            </h3>
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm font-light leading-relaxed">
-              For complex multi-national enterprises with explicit data localization demands, Cortex provisions isolated AWS/GCP architecture layers operating completely outside shared master pools.
-            </p>
-
-            <ul className="space-y-2.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 pt-2 font-mono">
-              {["Custom localized data processing laws compliance", "Custom dedicated premium proxy infrastructure keys", "SLA contract models delivering guaranteed uptime bounds"].map((item, key) => (
-                <li key={key} className="flex items-center gap-2.5">
-                  <div className="h-4 w-4 bg-amber-500/10 dark:bg-amber-400/10 rounded-full flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
-                    <Check size={10} className="stroke-3" />
-                  </div>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="pt-4">
-              <button className="px-5 py-2.5 bg-amber-400 hover:bg-amber-500 text-black font-black text-xs rounded-xl shadow-md transition-all active:scale-[0.98]">
-                Contact Infrastructure Core Architects
-              </button>
-            </div>
-          </div>
-
-          <div className="w-full lg:w-[45%] aspect-square rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative bg-zinc-100 dark:bg-zinc-950">
-            <img
-              src={VISUALS.portalMockup}
-              alt="Isolated Infrastructure Portal"
-              className="w-full h-full object-cover grayscale brightness-90 contrast-110"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-zinc-50 dark:from-zinc-950 via-zinc-50/20 dark:via-zinc-950/20 to-transparent" />
-          </div>
-        </div>
-      </section>
-
-      <footer id="section-3" className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-[#060608] relative z-10 pt-20 pb-12">
+      <footer id="section-3" className="border-t border-zinc-200 dark:border-white/10 bg-white dark:bg-[#060608] relative z-10 pt-20 pb-12 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-6 pb-16 border-b border-zinc-200 dark:border-zinc-900">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-6 pb-16 border-b border-zinc-200 dark:border-white/10">
             <div className="col-span-2 space-y-4">
-              <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 bg-zinc-950 dark:bg-white text-white dark:text-black rounded-lg flex items-center justify-center font-black text-xs">C</div>
-                <span className="text-md font-black tracking-tighter uppercase font-mono text-zinc-950 dark:text-white">Cortex Ecosystem</span>
+              <div className="flex items-center gap-1">
+                <div className="h-8 w-8 bg-zinc-950 dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-black text-xs">
+                  <img src="/favicon.svg" alt="" className="h-full w-full" />
+                </div>
+                <span className="text-lg font-black tracking-tighter font-manrope text-zinc-950 dark:text-white">Cortex</span>
               </div>
               <p className="text-zinc-400 dark:text-zinc-500 text-xs font-light max-w-xs leading-relaxed">
-                High-performance foundational software software scaling multi-tenant organization pipelines and decoupled edge event architectures globally.
+                High-performance production software scaling multi-tenant organization pipelines and dynamic middleware subdomain architectures globally.
               </p>
             </div>
 
-            {["Platform Pods", "Security Node", "Ecosystem Corp"].map((title, groupIdx) => {
+            {["Platform Core", "Tenant Layer", "Ecosystem"].map((title, groupIdx) => {
               const links = [
-                ["Core Shard Routers", "Tenant DB Engine", "Console Portal UI", "White-Label Proxy"],
-                ["Isolation Parameters", "Data Sharding Rules", "RBAC Policies", "Audit System Logging"],
-                ["Infrastructure Status", "Developer Core Docs", "Global Edge Latency", "Request Cluster Base"]
+                ["Dynamic Subdomains", "Console Analytics", "Workspace Shards"],
+                ["Member Directories", "RBAC Policies"],
+                ["Open Source Code", "Developer Docs"]
               ][groupIdx];
               return (
                 <div key={title} className="space-y-3.5">
                   <h5 className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest font-mono">{title}</h5>
                   <ul className="space-y-2 text-xs text-zinc-400 dark:text-zinc-500 font-medium">
                     {links.map((link) => (
-                      <li key={link}><a href="#" className="hover:text-zinc-950 dark:hover:text-white transition-colors">{link}</a></li>
+                      <li key={link}>
+                        {link === "Developer Docs" || link === "Open Source Code" ? (
+                          <a
+                            href="https://github.com/quirbyte/Cortex-v2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-zinc-950 dark:hover:text-white transition-colors cursor-pointer"
+                          >
+                            {link}
+                          </a>
+                        ) : (
+                          <a href="#" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                            {link}
+                          </a>
+                        )}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -468,11 +498,11 @@ export default function SaaSPlatformLanding() {
           <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-mono text-zinc-400 dark:text-zinc-600">
             <div className="flex items-center gap-4">
               <span>Security Hub Certified</span>
-              <span>• ISO-27001 Infrastructure Standard</span>
-              <span>• GDPR Tenant Layer Compliant</span>
+              <span>• MIT License Standards</span>
+              <span>• Isolated Workspace Clusters</span>
             </div>
             <div>
-              © 2026 Cortex Core Systems Inc. Localized Cluster Shards Active.
+              © 2026 Cortex Systems Inc. Localized Cluster Shards Active.
             </div>
           </div>
         </div>
@@ -486,7 +516,7 @@ export default function SaaSPlatformLanding() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full p-4 border border-zinc-200/80 dark:border-zinc-500 bg-[#fcfcfd]/95 dark:bg-zinc-600 backdrop-blur-2xl rounded-2xl shadow-xl flex flex-col gap-1.5"
+              className="w-full p-4 border border-zinc-200/80 dark:border-zinc-500 bg-[#fcfcfd]/95 dark:bg-zinc-800/60 backdrop-blur-2xl rounded-2xl shadow-xl flex flex-col gap-1.5"
             >
               {["Docs", "Features", "Pricing", "About Us"].map((item, i) => (
                 <button
