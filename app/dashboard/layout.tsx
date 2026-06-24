@@ -9,24 +9,26 @@ export const dynamic = "force-dynamic";
 export type OptionTypes = "home" | "events" | "orgs" | "bookings" | "settings" | "help";
 
 interface DashboardLayoutProps {
-    children: React.ReactNode
-    searchParams: Promise<{ tab?: string }>;
+    children: React.ReactNode;
 }
 
-export default async function DashboardPage({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({ children }: DashboardLayoutProps) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
         redirect("/signin");
     }
+    
     const userId = (session.user as any).id;
     const user = await prisma.user.findFirst({
         where: {
             id: userId
         },
     });
-    if(!user){
+    
+    if (!user) {
         redirect("/signin");
     }
+    
     return (
         <SidebarLayout user={user}>
             <div className="h-full w-full">

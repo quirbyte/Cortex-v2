@@ -22,36 +22,36 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   return (
     <>
       {currentTab === "home" && (
-        <Suspense fallback={<LoadingTabSkeleton data={"dashboard"} />}>
+        <Suspense key="home" fallback={<LoadingTabSkeleton data={"dashboard"} />}>
           <HomePage />
         </Suspense>
       )}
+
       {currentTab === "events" && (
-        <Suspense fallback={<LoadingTabSkeleton data={"events"} />}>
+        <Suspense key="events" fallback={<LoadingTabSkeleton data={"events"} />}>
           <EventPage />
         </Suspense>
       )}
+
       {currentTab === "orgs" && (
-        <Suspense fallback={<LoadingTabSkeleton data={"user organizations"} />}>
+        <Suspense key="orgs" fallback={<LoadingTabSkeleton data={"user organizations"} />}>
           <OrgPage />
         </Suspense>
       )}
-      {
-        currentTab === "bookings" && (
-          <Suspense fallback={<LoadingTabSkeleton data={"user bookings"} />}>
-            <BookingsPage />
-          </Suspense>
-        )
-      }
-      {
-        currentTab === "settings" && (
-          <Suspense fallback={<LoadingTabSkeleton data={"user settings"} />}>
-            <SettingsPage />
-          </Suspense>
-        )
-      }
-      {currentTab === "help" && <HelpPage />}
 
+      {currentTab === "bookings" && (
+        <Suspense key="bookings" fallback={<LoadingTabSkeleton data={"user bookings"} />}>
+          <BookingsPage />
+        </Suspense>
+      )}
+
+      {currentTab === "settings" && (
+        <Suspense key="settings" fallback={<LoadingTabSkeleton data={"user settings"} />}>
+          <SettingsPage />
+        </Suspense>
+      )}
+
+      {currentTab === "help" && <HelpPage />}
     </>
   );
 }
