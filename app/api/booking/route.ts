@@ -12,11 +12,18 @@ export async function POST(req: NextRequest) {
 
     const userId = (session.user as any).id;
     const body = await req.json();
-    const { eventId } = body;
+    const { eventId, quantity } = body;
 
     if (!eventId) {
       return NextResponse.json(
         { msg: "Missing required fields" },
+        { status: 400 },
+      );
+    }
+
+    if(quantity<=0){
+      return NextResponse.json(
+        { msg: "Must book at least one ticket" },
         { status: 400 },
       );
     }
@@ -31,7 +38,7 @@ export async function POST(req: NextRequest) {
         throw new Error("NOT_FOUND");
       }
 
-      if (targetEvent.sold >= targetEvent.capacity) {
+      if (targetEvent.sold >= targetEvent.capacity || (targetEvent.sold + quantity > targetEvent.capacity)) {
         throw new Error("CAPACITY_EXCEEDED");
       }
 
@@ -45,11 +52,11 @@ export async function POST(req: NextRequest) {
         create: {
           eventId,
           bookerId: userId,
-          count: 1,
+          count: quantity,
         },
         update: {
           count: {
-            increment: 1,
+            increment: quantity,
           },
         },
       });
@@ -58,7 +65,7 @@ export async function POST(req: NextRequest) {
         where: { id: eventId },
         data: {
           sold: {
-            increment: 1,
+            increment: quantity,
           },
         },
       });
@@ -156,7 +163,7 @@ export async function DELETE(req: NextRequest) {
 
     if (error.message === "NOT_FOUND") {
       return NextResponse.json(
-        { msg: "Target event does not exist" },
+        { msg: "Booking record does not exist or unauthorized" },
         { status: 404 },
       );
     }

@@ -1,14 +1,16 @@
 "use client";
-import { MapPin, Edit2, Trash2, Clock, Users, Tag } from "lucide-react";
+import { MapPin, Edit2, Trash2, Clock, Users, Tag, ShieldCheck } from "lucide-react";
 import { orgEventType } from "./OrgEventsPane";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import EditEventSidebar from "./EditEventSidebar";
+import VerifyTab from "./VerifyTab";
 
 export default function EventCard({ event, currentRole, id }: { event: orgEventType; currentRole: string; id: string }) {
     const router = useRouter();
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [verifyTabOpen, setVerifyTabOpen] = useState(false);
     const handleDeleteEvent = async () => {
         try {
             setLoading(true);
@@ -19,7 +21,9 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
             if (res.ok) {
                 router.refresh();
             }
-        } catch { } finally {
+        } catch {
+            alert("Event deletion failed")
+        } finally {
             setLoading(false);
         }
     }
@@ -42,7 +46,7 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         />
                     )
                 }
-                <div className="absolute top-2.5 right-2.5 flex items-center gap-1 z-10 opacity-90 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-2.5 right-2.5 flex items-center gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
                     {(currentRole === "MODERATOR" || currentRole === "ADMIN") && <button
                         onClick={() => setIsEditOpen(true)}
                         aria-label="Edit event"
@@ -59,6 +63,14 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         <Trash2 size={12} />
                     </button>}
                 </div>
+                <button
+                    onClick={() => setVerifyTabOpen(true)}
+                    aria-label="Delete event"
+                    disabled={loading}
+                    className="absolute right-2.5 bottom-2 flex h-7 w-7 items-center justify-center rounded-lg bg-white/80 backdrop-blur-md text-zinc-500 border border-white/20 hover:bg-green-50 hover:text-green-600 hover:border-green-100 shadow-sm transition active:scale-95 disabled:opacity-50"
+                >
+                    <ShieldCheck size={12} />
+                </button>
             </div>
             <div className="p-3.5 flex flex-col flex-1 justify-between space-y-3.5">
                 <div className="space-y-2">
@@ -111,7 +123,7 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
                         <div className="text-right shrink-0 font-mono pl-3">
                             <span className="text-xs text-zinc-400 font-bold block leading-none uppercase text-[8px] tracking-wider mb-0.5">Price</span>
                             <span className="text-base sm:text-lg font-black text-black dark:text-white leading-none tracking-tight">
-                                {event.price!==0?`₹${event.price}` : "FREE" }
+                                {event.price !== 0 ? `₹${event.price}` : "FREE"}
                             </span>
                         </div>
                     </div>
@@ -120,6 +132,8 @@ export default function EventCard({ event, currentRole, id }: { event: orgEventT
         </div>
         {
             <EditEventSidebar isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} event={event} />
+        }{
+            verifyTabOpen && <VerifyTab setVerifyTabOpen={setVerifyTabOpen} loading={loading} setLoading={setLoading} eventId={id} />
         }
     </>
 }
