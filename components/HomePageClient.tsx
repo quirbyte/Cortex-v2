@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight, TicketCheck, TrendingUp, Calendar, Share2Ico
 import { useEffect, useState, useMemo } from "react";
 import { formatDate } from "@/helpers/date";
 import { event, userBooking } from "@/sections/HomePage";
+import { useRouter } from "next/navigation";
 
 export default function HomePageClient({ topEvents, userBookings }: { topEvents: event[]; userBookings: userBooking[] }) {
     const today = useMemo(() => new Date(), []);
     const formattedDate = formatDate({ date: today.toISOString(), option: 2 });
     const [current, setCurrent] = useState(0);
+    const router = useRouter();
 
     const prevSlide = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -43,6 +45,10 @@ export default function HomePageClient({ topEvents, userBookings }: { topEvents:
         return bookedSet;
     }, [userBookings, currentYear, currentMonth]);
 
+    const handleEventPageRedirect = async (eventId: string) => {
+        router.push(`/dashboard/event/${eventId}`);
+    }
+
     return (
         <div className="min-h-screen w-full pt-7 md:pt-5 p-4 font-manrope bg-zinc-50/50 dark:bg-zinc-950">
             <header className="flex items-center justify-between w-full border-b border-black/5 dark:border-zinc-800 pb-4">
@@ -77,7 +83,7 @@ export default function HomePageClient({ topEvents, userBookings }: { topEvents:
                         <p className="mt-2.5 text-zinc-400 text-xs md:text-sm tracking-wide leading-relaxed line-clamp-3 md:max-w-[90%]">
                             {topEvents[current].desc}
                         </p>
-                        <button className="mt-5 px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-black font-bold text-xs md:text-sm tracking-tight transition-all active:scale-[0.98] cursor-pointer shadow-md shadow-amber-400/10">
+                        <button onClick={() => handleEventPageRedirect(topEvents[current].id)} className="mt-5 px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-black font-bold text-xs md:text-sm tracking-tight transition-all active:scale-[0.98] cursor-pointer shadow-md shadow-amber-400/10">
                             Book Tickets Now
                         </button>
                     </div>
@@ -134,7 +140,7 @@ export default function HomePageClient({ topEvents, userBookings }: { topEvents:
                                     <p className="text-xs md:text-sm font-bold truncate text-zinc-800 dark:text-zinc-400 group-hover/row:text-white dark:group-hover/row:text-black">{event.name}</p>
                                 </div>
 
-                                <button className="shrink-0 ml-4 py-1.5 px-3 rounded-lg bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold tracking-tight border border-white/10 group-hover/row:bg-amber-400 group-hover/row:text-black transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer">
+                                <button onClick={() => handleEventPageRedirect(event.id)} className="shrink-0 ml-4 py-1.5 px-3 rounded-lg bg-black text-white dark:bg-white dark:text-black text-[11px] font-bold tracking-tight border border-white/10 group-hover/row:bg-amber-400 group-hover/row:text-black transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer">
                                     <TicketCheck size={13} />
                                     <span className="hidden sm:inline">Book Now</span>
                                 </button>

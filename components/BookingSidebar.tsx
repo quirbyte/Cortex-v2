@@ -66,7 +66,7 @@ export default function BookingSidebar({ isOpen, onClose, loading, setLoading, e
                     <button
                         disabled={loading}
                         onClick={onClose}
-                        className="absolute top-4 right-4 h-8 w-8 flex rounded-xl border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 justify-center items-center text-zinc-400 hover:text-black dark:hover:text-white transition-all disabled:opacity-50"
+                        className="absolute top-4 right-4 h-8 w-8 flex rounded-xl border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 justify-center items-center text-zinc-400 hover:text-black transition-all disabled:opacity-50"
                     >
                         <X size={15} />
                     </button>
