@@ -108,7 +108,7 @@ Notable constraints:
 
 ## Local Setup
 
-**Setup 1: Without Docker**
+### Option 1: Without Docker
 
 ```bash
 git clone https://github.com/quirbyte/Cortex-v2
@@ -117,6 +117,7 @@ npm install
 ```
 
 Create `.env`:
+
 ```
 DATABASE_URL=
 NEXTAUTH_SECRET=
@@ -132,73 +133,88 @@ npx prisma migrate dev
 npm run dev
 ```
 
----
+### Option 2: With Docker
 
-**Setup 2: With Docker**
+1. **Start the Docker Engine.**
 
-1. Start the Docker Engine
+2. **Navigate to the project root folder and copy the environment file.**
 
-2. 
-# Navigate to the project root folder
+   On Linux, macOS, or Git Bash:
 
-On Linux, macOS, or Git Bash:
+   ```bash
+   cp .env.example .env.local
+   ```
 
-```bash
-cp .env.example .env.local
-```
-On Windows PowerShell:
+   On Windows PowerShell:
 
-```PowerShell
-copy .env.example .env.local
-```
+   ```powershell
+   copy .env.example .env.local
+   ```
 
-Note: Ensure DATABASE_URL inside .env.local is set exactly to:
-DATABASE_URL="postgres://postgres:mysecretpassword@cortex-db:5432/postgres"
-The application container uses the container name cortex-db to communicate over the shared network.
+   > **Note:** Ensure `DATABASE_URL` inside `.env.local` is set exactly to:
+   > ```
+   > DATABASE_URL="postgres://postgres:mysecretpassword@cortex-db:5432/postgres"
+   > ```
+   > The application container uses the container name `cortex-db` to communicate over the shared network.
 
-3. 
-```bash
-docker network create cortex-network
-```
-4. 
-```bash
-docker volume create cortex-volume
-```
-5. 
-# Remove any stale instances if they exist
-docker rm -f cortex-db 2>/dev/null
+3. **Create the Docker network.**
 
-# Run the Postgres container instance
-docker run --network cortex-network --name cortex-db -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -v cortex-volume:/var/lib/postgresql -d postgres
+   ```bash
+   docker network create cortex-network
+   ```
 
-6. 
-# If using Windows Command Prompt (CMD):
-```
-set DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
-npx prisma db push
-```
+4. **Create the Docker volume.**
 
-# OR If using Windows PowerShell:
-```
-$env:DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
-npx prisma db push
-```
-# OR If using Linux / macOS / Git Bash:
-```
-DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres" npx prisma db push
-```
+   ```bash
+   docker volume create cortex-volume
+   ```
 
-7. 
-# Remove any stale application server instances if they exist
-```
-docker rm -f cortex 2>/dev/null
-```
+5. **Remove any stale Postgres container and run a fresh instance.**
 
-# Launch your micro-optimized application container safely
-```
-docker run --network cortex-network --name cortex -p 3000:3000 --env-file .env.local quirbyte/cortex
-```
+   ```bash
+   # Remove any stale instances if they exist
+   docker rm -f cortex-db 2>/dev/null
 
+   # Run the Postgres container instance
+   docker run --network cortex-network --name cortex-db -p 5432:5432 \
+     -e POSTGRES_PASSWORD=mysecretpassword \
+     -v cortex-volume:/var/lib/postgresql \
+     -d postgres
+   ```
+
+6. **Push the Prisma schema to the database.**
+
+   Windows Command Prompt (CMD):
+
+   ```cmd
+   set DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
+   npx prisma db push
+   ```
+
+   Windows PowerShell:
+
+   ```powershell
+   $env:DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
+   npx prisma db push
+   ```
+
+   Linux / macOS / Git Bash:
+
+   ```bash
+   DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres" npx prisma db push
+   ```
+
+7. **Remove any stale application container and launch the app.**
+
+   ```bash
+   # Remove any stale application server instances if they exist
+   docker rm -f cortex 2>/dev/null
+
+   # Launch the application container
+   docker run --network cortex-network --name cortex -p 3000:3000 \
+     --env-file .env.local \
+     quirbyte/cortex
+   ```
 
 ---
 
