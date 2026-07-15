@@ -216,6 +216,44 @@ npm run dev
      quirbyte/cortex
    ```
 
+### Option 3: With Docker Compose
+
+1. **Start the Docker Engine.**
+
+2. **Clone The repository.**
+
+3. **Navigate to the project root folder and copy the environment file.**
+
+   On Linux, macOS, or Git Bash:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   copy .env.example .env.local
+   ```
+
+   > **Note:** Ensure `DATABASE_URL` inside `.env.local` is set exactly to:
+   > ```
+   > DATABASE_URL="postgres://postgres:mysecretpassword@cortex-db:5432/postgres"
+   > ```
+   > The application container uses the container name `cortex-db` to communicate over the shared network.
+
+4. **Start docker compose**
+
+   ```bash
+   docker compose up
+   ```
+
+   To stop docker compose
+
+   ```bash
+   docker compose down
+   ```
+
 ---
 
 ## Upcoming Features
