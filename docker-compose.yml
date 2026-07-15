@@ -1,0 +1,60 @@
+version: "3.8"
+
+volumes:
+  cortex-volume:
+    driver: local
+
+services:
+  cortex-db:
+    image: postgres:latest
+    container_name: cortex-db
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - cortex-volume:/var/lib/postgresql
+    networks:
+      - cortex-network
+    # This checks if Postgres is actually accepting queries
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+      
+
+  cortex-migrator:
+    image: node:22-alpine
+    container_name: cortex-migrator
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@cortex-db:5432/postgres
+    command: sh -c "npm install && npx prisma db push"
+    depends_on:
+      cortex-db:
+        condition: service_healthy # Wait until Postgres is fully ready
+    networks:
+      - cortex-network
+
+
+
+  cortex-app:
+    image: quirbyte/cortex
+    container_name: cortex
+    depends_on:
+      cortex-migrator:
+        condition: service_completed_successfully # Wait for tables to exist
+    env_file:
+      - .env.local
+    ports:
+      - "3000:3000"
+    networks:
+      - cortex-network
+
+networks:
+  cortex-network:
+    driver: bridge
