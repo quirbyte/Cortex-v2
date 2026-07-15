@@ -108,6 +108,8 @@ Notable constraints:
 
 ## Local Setup
 
+**Setup 1: Without Docker**
+
 ```bash
 git clone https://github.com/quirbyte/Cortex-v2
 cd Cortex-v2
@@ -132,12 +134,79 @@ npm run dev
 
 ---
 
+**Setup 2: With Docker**
+
+1. Start the Docker Engine
+
+2. 
+# Navigate to the project root folder
+
+On Linux, macOS, or Git Bash:
+
+```bash
+cp .env.example .env.local
+```
+On Windows PowerShell:
+
+```PowerShell
+copy .env.example .env.local
+```
+
+Note: Ensure DATABASE_URL inside .env.local is set exactly to:
+DATABASE_URL="postgres://postgres:mysecretpassword@cortex-db:5432/postgres"
+The application container uses the container name cortex-db to communicate over the shared network.
+
+3. 
+```bash
+docker network create cortex-network
+```
+4. 
+```bash
+docker volume create cortex-volume
+```
+5. 
+# Remove any stale instances if they exist
+docker rm -f cortex-db 2>/dev/null
+
+# Run the Postgres container instance
+docker run --network cortex-network --name cortex-db -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -v cortex-volume:/var/lib/postgresql -d postgres
+
+6. 
+# If using Windows Command Prompt (CMD):
+```
+set DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
+npx prisma db push
+```
+
+# OR If using Windows PowerShell:
+```
+$env:DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
+npx prisma db push
+```
+# OR If using Linux / macOS / Git Bash:
+```
+DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres" npx prisma db push
+```
+
+7. 
+# Remove any stale application server instances if they exist
+```
+docker rm -f cortex 2>/dev/null
+```
+
+# Launch your micro-optimized application container safely
+```
+docker run --network cortex-network --name cortex -p 3000:3000 --env-file .env.local quirbyte/cortex
+```
+
+
+---
+
 ## Upcoming Features
 
 - Redis caching for event listings
 - Razorpay payment gateway integration
 - AI-powered event recommendations using RAG + pgvector
-- Docker containerization
 - CI/CD pipeline
 
 ---

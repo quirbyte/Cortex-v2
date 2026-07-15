@@ -4,10 +4,6 @@ import { authOptions } from "../lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-    /* if user is logged in, redirects them to dashboard
-       we dont use useSession since it will cause flicker as it is a client side function that fetches info in background
-        after page is loaded, getServerSession is server side so it is sent to the browser pre rendered and doesnt flicker
-    */
     const isLoggedIn = await getServerSession(authOptions);
     if (isLoggedIn) {
         redirect("/dashboard");

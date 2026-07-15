@@ -22,17 +22,9 @@ COPY . .
 
 ENV NODE_ENV=production
 
-#optimization possible - check by remobing the arg
-
-ARG DATABASE_URL="postgresql://dummy@localhost:5432/dummy"
-
-ENV DATABASE_URL=${DATABASE_URL}
-
 RUN npm run build
 
-
-FROM node:${NODE_VERSION} AS runner
-
+FROM node:24.14.0-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
