@@ -4,50 +4,66 @@ import OrgSettings from "@/components/OrgSettings";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
+interface CustomUser {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
 type Props = {
-    params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function OrgDetailedPage({ params }: Props) {
-    const { slug } = await params;
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-        redirect("/signin");
-    }
-    const userId = (session.user as any).id;
-    const orgData = await prisma.organization.findFirst({
-        where: {
-            slug: slug,
-            Roles: {
-                some: {
-                    userId: userId,
-                },
-            },
+  const { slug } = await params;
+  const session = await getServerSession(authOptions);
+  
+  if (!session || !session.user) {
+    redirect("/signin");
+  }
+
+  const userId = (session.user as CustomUser).id;
+  const orgData = await prisma.organization.findFirst({
+    where: {
+      slug: slug,
+      Roles: {
+        some: {
+          userId: userId,
         },
-        select: {
-            id : true,
-            name: true,
-            slug: true,
-            createdAt: true,
-            Roles: {
-                where: { userId: userId },
-                select: { role: true }
-            }
-        }
-    });
-    if (!orgData) {
-        return <div className="w-full h-full flex justify-center items-center">
-            You are not allowed to access this page
-        </div>
-    }
-    const org = {
-        id : orgData.id,
-        slug : orgData.slug,
-        name : orgData.name,
-        createdAt : orgData?.createdAt.toISOString(),
-        role : orgData?.Roles[0].role
-    }
-    return <div className="w-full h-full flex justify-center items-center">
-        <OrgSettings org={org} userId={userId} />
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      createdAt: true,
+      Roles: {
+        where: { userId: userId },
+        select: { role: true },
+      },
+    },
+  });
+
+  if (!orgData) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        You are not allowed to access this page
+      </div>
+    );
+  }
+
+  const org = {
+    id: orgData.id,
+    slug: orgData.slug,
+    name: orgData.name,
+    createdAt: orgData.createdAt.toISOString(),
+    role: orgData.Roles[0]?.role,
+  };
+
+  return (
+    <div className="w-full h-full flex justify-center items-center">
+      <OrgSettings org={org} userId={userId} />
     </div>
+  );
 }

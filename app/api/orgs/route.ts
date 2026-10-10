@@ -4,6 +4,13 @@ import { orgObject } from "@/helpers/types";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
+interface CustomUser {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -25,11 +32,10 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
-    const userId = (session.user as any).id;
+    const userId = (session.user as CustomUser).id;
     await prisma.organization.create({
       data: {
         name: data.name,
-
         slug: data.slug,
         createdBy: userId,
         Roles: {
@@ -43,8 +49,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       msg: "Created organization successfully",
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err: unknown) {
+    console.error(err);
     return NextResponse.json(
       {
         msg: "Internal Server Error",
@@ -60,14 +66,14 @@ export async function PUT(req: NextRequest) {
   try {
     const { id, slug } = await req.json();
     const slugObject = orgObject.pick({ slug: true });
-    const isValidated = slugObject.safeParse({ slug });
-    if (!isValidated) {
+    const validationResult = slugObject.safeParse({ slug });
+    if (!validationResult.success) {
       return NextResponse.json(
         {
           msg: "Invalid event slug",
         },
         {
-          status: 413,
+          status: 400,
         },
       );
     }
@@ -76,7 +82,7 @@ export async function PUT(req: NextRequest) {
         {
           msg: "Organization Id missing",
         },
-        { status: 404 },
+        { status: 400 },
       );
     }
     await prisma.organization.update({
@@ -88,10 +94,10 @@ export async function PUT(req: NextRequest) {
       },
     });
     return NextResponse.json({
-      msg: "Updated Organization name successfully",
+      msg: "Updated Organization slug successfully",
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err: unknown) {
+    console.error(err);
     return NextResponse.json(
       {
         msg: "Internal Server Error",
@@ -107,14 +113,14 @@ export async function PATCH(req: NextRequest) {
   try {
     const { id, name } = await req.json();
     const nameObject = orgObject.pick({ name: true });
-    const isValidated = nameObject.safeParse({ name });
-    if (!isValidated) {
+    const validationResult = nameObject.safeParse({ name });
+    if (!validationResult.success) {
       return NextResponse.json(
         {
           msg: "Invalid event name",
         },
         {
-          status: 413,
+          status: 400,
         },
       );
     }
@@ -123,7 +129,7 @@ export async function PATCH(req: NextRequest) {
         {
           msg: "Organization Id missing",
         },
-        { status: 404 },
+        { status: 400 },
       );
     }
     await prisma.organization.update({
@@ -137,8 +143,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({
       msg: "Updated Organization name successfully",
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err: unknown) {
+    console.error(err);
     return NextResponse.json(
       {
         msg: "Internal Server Error",
@@ -161,7 +167,7 @@ export async function DELETE(req: NextRequest) {
         { status: 403 },
       );
     }
-    const userId = (session.user as any).id;
+    const userId = (session.user as CustomUser).id;
     const data = await req.json();
     if (!data.id) {
       return NextResponse.json(
@@ -182,8 +188,8 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({
       msg: "Deleted organization successfully",
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err: unknown) {
+    console.error(err);
     return NextResponse.json(
       {
         msg: "Internal Server Error",

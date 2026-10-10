@@ -274,7 +274,6 @@ Notable constraints:
 - Redis caching for event listings
 - Razorpay payment gateway integration
 - AI-powered event recommendations using RAG + pgvector
-- CI/CD pipeline
 
 ---
 

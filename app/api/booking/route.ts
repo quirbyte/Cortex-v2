@@ -3,6 +3,14 @@ import { prisma } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
+// 1. Define an interface extending your session user type
+interface CustomUser {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -10,7 +18,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ msg: "Unauthenticated" }, { status: 403 });
     }
 
-    const userId = (session.user as any).id;
+    // Explicitly cast session.user to your interface
+    const userId = (session.user as CustomUser).id;
     const body = await req.json();
     const { eventId, quantity } = body;
 
@@ -21,7 +30,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if(quantity<=0){
+    if (quantity <= 0) {
       return NextResponse.json(
         { msg: "Must book at least one ticket" },
         { status: 400 },
@@ -38,7 +47,10 @@ export async function POST(req: NextRequest) {
         throw new Error("NOT_FOUND");
       }
 
-      if (targetEvent.sold >= targetEvent.capacity || (targetEvent.sold + quantity > targetEvent.capacity)) {
+      if (
+        targetEvent.sold >= targetEvent.capacity ||
+        targetEvent.sold + quantity > targetEvent.capacity
+      ) {
         throw new Error("CAPACITY_EXCEEDED");
       }
 
@@ -77,16 +89,19 @@ export async function POST(req: NextRequest) {
       msg: "Event Booked successfully",
       count: result.count,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Booking error:", error);
 
-    if (error.message === "NOT_FOUND") {
+    // 2. Type-guard unknown errors before reading properties
+    const errorMessage = error instanceof Error ? error.message : "";
+
+    if (errorMessage === "NOT_FOUND") {
       return NextResponse.json(
         { msg: "Target event does not exist" },
         { status: 404 },
       );
     }
-    if (error.message === "CAPACITY_EXCEEDED") {
+    if (errorMessage === "CAPACITY_EXCEEDED") {
       return NextResponse.json(
         { msg: "Capacity filled! No more seats left.." },
         { status: 400 },
@@ -104,7 +119,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ msg: "Unauthenticated" }, { status: 403 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = (session.user as CustomUser).id;
     const body = await req.json();
     const { id } = body;
 
@@ -158,10 +173,12 @@ export async function DELETE(req: NextRequest) {
     });
 
     return NextResponse.json({ msg: message });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Booking error:", error);
 
-    if (error.message === "NOT_FOUND") {
+    const errorMessage = error instanceof Error ? error.message : "";
+
+    if (errorMessage === "NOT_FOUND") {
       return NextResponse.json(
         { msg: "Booking record does not exist or unauthorized" },
         { status: 404 },

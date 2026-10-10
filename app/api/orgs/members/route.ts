@@ -86,7 +86,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({
       msg: "Member deleted sucessfully",
     });
-  } catch (error: any) {
+  } catch {
     return NextResponse.json({ msg: "Internal server error" }, { status: 500 });
   }
 }

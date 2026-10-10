@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
@@ -71,10 +72,10 @@ export default function SignupPage() {
         <p className="font-manrope text-xs text-zinc-500">continue with</p>
         <div className="mt-2 flex items-center gap-7">
             <motion.div onClick={() => handleSocial("google")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
-                <img className="h-5 w-5" src="/google.svg" alt="" />
+                <Image height={20} width={20} src="/google.svg" alt="" />
             </motion.div>
             <motion.div onClick={() => handleSocial("linkedin")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
-                <img className="h-5 w-5" src="/linkedin.svg" alt="" />
+                <Image height={20} width={20} src="/linkedin.svg" alt="" />
             </motion.div>
         </div>
         <div className="absolute bottom-3 flex gap-2 font-manrope text-sm">

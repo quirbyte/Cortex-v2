@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function SigninPage() {
     const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ export default function SigninPage() {
 
     return <div className="relative text-center p-4 w-full flex flex-col justify-center items-center h-full">
         <h1 className="text-3xl font-medium">Welcome back</h1>
-        <p className="text-sm font-extralight tracking-wide font-manrope">We're happy to have you back.</p>
+        <p className="text-sm font-extralight tracking-wide font-manrope">We&apos;re happy to have you back.</p>
 
         <form onSubmit={handleFormSubmit} className="mt-4 w-full flex flex-col gap-3 justify-center items-center font-manrope">
             <div className="lg:w-[60%] md:w-[60%] w-[80%]">
@@ -63,10 +64,10 @@ export default function SigninPage() {
         <p className="font-manrope text-xs text-zinc-500">continue with</p>
         <div className="mt-2 flex gap-7 items-center">
             <motion.div onClick={() => handleSocial("google")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
-                <img className="h-5 w-5" src="/google.svg" alt="" />
+                <Image width={20} height={20} src="/google.svg" alt="" />
             </motion.div>
             <motion.div onClick={() => handleSocial("linkedin")} whileHover={{ scale: 1.1 }} className="cursor-pointer h-7 w-7 flex justify-center items-center rounded-full">
-                <img className="h-5 w-5" src="/linkedin.svg" alt="" />
+                <Image width={20} height={20} src="/linkedin.svg" alt="" />
             </motion.div>
         </div>
         <div className="absolute bottom-3 flex gap-2 font-manrope text-sm">

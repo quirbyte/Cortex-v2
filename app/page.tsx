@@ -3,11 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, Variants } from "framer-motion";
 import {
-  Shield, Building2,
+  Building2,
   Database, Fingerprint, BarChart3,
   Workflow, ArrowUpRight, Check, Sparkles, Globe, Command
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const VISUALS = {
   heroVideo: "/vid1.mp4",
@@ -71,7 +72,14 @@ export default function SaaSPlatformLanding() {
                 className="flex items-center gap-1 justify-center"
               >
                 <div className="h-11 w-11 bg-white dark:bg-black rounded-xl flex items-center justify-center shadow-2xl shadow-amber-400/20">
-                  <img src="/favicon.svg" alt="" className=" h-full w-full rounded-full" />
+                  <div className="relative h-full w-full rounded-full">
+                    <Image
+                      src="/favicon.svg"
+                      alt="favicon"
+                      fill
+                      className="rounded-full object-cover"
+                    />
+                  </div>
                 </div>
                 <span className="text-2xl font-black tracking-tighter font-manrope text-zinc-950 dark:text-white">Cortex</span>
               </motion.div>
@@ -105,7 +113,15 @@ export default function SaaSPlatformLanding() {
             <div className="flex items-center gap-8">
               <div className="flex items-center gap-1 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                 <div className="h-8 w-8 bg-zinc-950 dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-black text-xs transition-transform">
-                  <img src="/favicon.svg" alt="" className="h-full w-full" />
+                  <div className="h-11 w-11 bg-white dark:bg-black rounded-xl flex items-center justify-center shadow-2xl shadow-amber-400/20">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src="/favicon.svg"
+                        alt="favicon"
+                        fill
+                      />
+                    </div>
+                  </div>
                 </div>
                 <span className="text-sm font-black tracking-tighter font-manrope text-zinc-950 dark:text-white">Cortex</span>
               </div>
@@ -218,11 +234,14 @@ export default function SaaSPlatformLanding() {
             className="mt-24 relative rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#0d0d11] p-2.5 shadow-2xl max-w-6xl mx-auto aspect-video overflow-hidden group z-10"
           >
             <div className="w-full h-full rounded-xl overflow-hidden border border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 relative">
-              <img
-                src={VISUALS.heroGrid}
-                alt="Cortex Global Matrix Analytics Dashboard"
-                className="w-full h-full object-contain opacity-95 dark:opacity-75 object-top transition-transform duration-1000 group-hover:scale-[1.01]"
-              />
+              <div className="w-full h-full">
+                <Image
+                  src={VISUALS.heroGrid}
+                  alt="Cortex Global Matrix Analytics Dashboard"
+                  fill
+                  className="object-contain opacity-95 dark:opacity-75 object-top transition-transform duration-1000 group-hover:scale-[1.01]"
+                />
+              </div>
               <div className="absolute inset-0 bg-linear-to-t from-[#fcfcfd] dark:from-[#09090b] via-transparent to-transparent" />
 
               <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/90 dark:bg-zinc-950/80 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 rounded-xl hidden md:flex items-center justify-between shadow-xs">

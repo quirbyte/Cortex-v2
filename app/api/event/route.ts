@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       msg: "Created Event successfully",
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         error: "Internal Server Error",

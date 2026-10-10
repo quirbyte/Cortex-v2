@@ -2,6 +2,7 @@ import AnimatedC from "@/DesignComponents/AnimatedC";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
     const isLoggedIn = await getServerSession(authOptions);
@@ -11,7 +12,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
 
     return <div className="relative min-h-screen w-screen flex">
         <div className="absolute left-8 top-8">
-            <img src="/logo.svg" className="text-black h-8 w-8" alt="" />
+            <Image src="/logo.svg" width={32} height={32} alt="" />
         </div>
         <div className="bg-amber-300 w-[50%] h-screen lg:block md:block hidden rounded-tr-2xl rounded-br-2xl">
             <div className="h-full w-full flex justify-center items-center">
